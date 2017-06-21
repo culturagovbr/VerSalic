@@ -126,7 +126,8 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
   queriesDeOrdemDeProponentes: { [query: string]: String }
                              = { '': 'Sem ordenamento',
                                  'total_captado': 'Total Captado',
-                                 'cgccpf':        'CGCCPF (FALTA NA API)' };
+                                 // 'cgccpf':        'CGCCPF (FALTA NA API)'
+                                 };
   queriesDeOrdemDeIncentivadores: { [query: string]: String }
                                 = { 'total_doado': 'Total Doado'
                                  // ,'cgccpf':        'CGCCPF (FALTA NA API)'
@@ -280,7 +281,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
           break;
         }
 
-        if (query === 'sort') {
+        if (query === 'sort' && this.ordenarPor !== '') {
           this.ordenarPor = this.queries['sort'].split(':')[0];
           this.ordenarDesc = this.queries['sort'].split(':')[1] === 'desc' ? true : false;
         }
@@ -386,7 +387,10 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
     this.queries['offset'] = '' + this.offsetAtual ;
 
     if (this.keys(this.ordenarPorQueries).length > 0) {
-      this.ordenarDesc ? (this.queries['sort'] = this.ordenarPor + ':desc') : (this.queries['sort'] = this.ordenarPor + ':asc');
+      // Verifica se existe um ordenamento padrão
+      if( this.ordenarPor ){
+        this.ordenarDesc ? (this.queries['sort'] = this.ordenarPor + ':desc') : (this.queries['sort'] = this.ordenarPor + ':asc');
+      }
     }
 
     const params = new URLSearchParams();

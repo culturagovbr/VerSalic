@@ -3,6 +3,6 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ConfigurationService {
 
-   public ApiUrl: String = 'http://hmg.api.salic.cultura.gov.br/beta/';
+   public ApiUrl: String = 'http://api.salic.cultura.gov.br/v1/';
    public limitResultados = 12;
 }
