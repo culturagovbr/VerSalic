@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     = { 'limit': '', 'offset': '', 'nome': '', 'data_inicio': '', 'data_termino': '' };
   queriesDeProponentes: { [query: string]: String }
                       = { 'limit': '', 'offset': '', 'nome': '', 'cgccpf': '', 'url_id': '',
-                           'municipio': '', 'UF': '', 'tipo_pessoa': '', 'sort': 'total_captado' };
+                           'municipio': '', 'UF': '', 'tipo_pessoa': '', 'sort': '' };
   queriesDeIncentivadores: { [query: string]: String }
                          = { 'limit': '', 'offset': '', 'nome': '', 'cgccpf': '', 'municipio': '',
                               'UF': '', 'tipo_pessoa': '', 'PRONAC': '', 'sort': 'total_doado' };
@@ -202,7 +202,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   onTrocaPesquisaPor(novoPesquisaPor) {
 
     this.pesquisaPor = novoPesquisaPor;
-    
+
     switch (this.pesquisaPor) {
       case 'projetos':
         this.ordenarPorQueries = this.queriesDeOrdemDeProjetos;
@@ -250,9 +250,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.queries['limit'] = '' + this.configurationService.limitResultados;
     this.queries['offset'] = '0';
 
-    if (this.keys(this.ordenarPorQueries).length > 0) {
+    /*if (this.keys(this.ordenarPorQueries).length > 0) {
       this.ordenarDesc ? (this.queries['sort'] = this.ordenarPor + ':desc') : (this.queries['sort'] = this.ordenarPor + ':asc');
-    }
+    }*/
     console.log(this.queries);
 
     switch (this.pesquisaPor) {

@@ -124,7 +124,8 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
                               'valor_projeto':    'Valor do Projeto' };
   queriesDeOrdemDePropostas: { [query: string]: String } = {};
   queriesDeOrdemDeProponentes: { [query: string]: String }
-                             = { 'total_captado': 'Total Captado',
+                             = { '': 'Sem ordenamento',
+                                 'total_captado': 'Total Captado',
                                  'cgccpf':        'CGCCPF (FALTA NA API)' };
   queriesDeOrdemDeIncentivadores: { [query: string]: String }
                                 = { 'total_doado': 'Total Doado'
@@ -145,7 +146,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
                     = { 'limit': '', 'offset': '', 'nome': '', 'data_inicio': '', 'data_termino': '' };
   queriesDeProponentes: { [query: string]: String }
                       = { 'limit': '', 'offset': '', 'nome': '', 'cgccpf': '', 'url_id': '',
-                           'municipio': '', 'UF': '', 'tipo_pessoa': '', 'sort': 'total_captado' };
+                           'municipio': '', 'UF': '', 'tipo_pessoa': '', 'sort': '' };
   queriesDeIncentivadores: { [query: string]: String }
                          = { 'limit': '', 'offset': '', 'nome': '', 'cgccpf': '', 'municipio': '',
                               'UF': '', 'tipo_pessoa': '', 'PRONAC': '', 'sort': 'total_doado' };
@@ -262,9 +263,9 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
             this.queriesDeProponentes = this.queries;
             this.ordenarPorQueries = this.queriesDeOrdemDeProponentes;
 
-            if (this.ordenarPor === '') {
+            /*if (this.ordenarPor === '') {
               this.ordenarPor = 'total_captado';
-            }
+            }*/
           break;
           case 'incentivadores':
             this.queriesDeIncentivadores = this.queries;
@@ -422,7 +423,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
               this.totalDeItems = resposta.total;
               this.numeroDeItems = resposta.count;
               this.listaProjetos = resposta.listaProjetos;
-              
+
               this.subirRespostasEstado = 'ativo';
             },
             err => {
@@ -507,7 +508,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
               this.totalDeItems = resposta.total;
               this.numeroDeItems = resposta.count;
               this.listaFornecedores = resposta.listaFornecedores;
-              
+
               this.subirRespostasEstado = 'ativo';
             },
             err => {
@@ -563,7 +564,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }
           return false;
-        
+
         case 'fornecedores':
           for (const key in this.queriesDeOrdemDeFornecedores) {
             if (key === this.queries['sort'].split(':')[0]) {
