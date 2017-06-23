@@ -181,6 +181,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             this.queriesDeIncentivadores = this.queries;
             this.ordenarPorQueries = this.queriesDeOrdemDeIncentivadores;
             if (this.ordenarPor === '') {
+              this.ordenarDesc = true;
               this.ordenarPor = 'total_doado';
             }
           break;

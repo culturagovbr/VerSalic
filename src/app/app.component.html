@@ -3,7 +3,7 @@
 
     <!-- Marca e Menu sanduíche ficam agrupados em telas menores -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" 
+      <button type="button" class="navbar-toggle collapsed"
               (click)="menuEscondido = !menuEscondido" aria-expanded="false"
               [ngStyle]="{'background-color': menuEscondido ? '$verde-salic' : '$verde-claro-salic' }">
         <span class="glyphicon glyphicon-menu-hamburger"></span>
@@ -29,6 +29,6 @@
   <router-outlet></router-outlet>
 </div>
 <footer class="footer">
-  <div class="container">Rodapé
+  <div class="container">
   </div>
 </footer>

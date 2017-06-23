@@ -273,6 +273,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
             this.ordenarPorQueries = this.queriesDeOrdemDeIncentivadores;
             if (this.ordenarPor === '') {
               this.ordenarPor = 'total_doado';
+              this.ordenarDesc = true;
             }
           break;
           case 'fornecedores':
@@ -283,7 +284,13 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (query === 'sort' && this.ordenarPor !== '') {
           this.ordenarPor = this.queries['sort'].split(':')[0];
-          this.ordenarDesc = this.queries['sort'].split(':')[1] === 'desc' ? true : false;
+
+          // Força o ordenamento padrão de incentivadores para 'desc'
+          if( this.pesquisaPor === 'incentivadores' ){
+            this.ordenarDesc = true;
+          } else {
+            this.ordenarDesc = this.queries['sort'].split(':')[1] === 'desc' ? true : false;
+          }
         }
 
         if (query !== 'offset' && query !== 'limit') {
