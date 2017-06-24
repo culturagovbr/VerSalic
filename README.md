@@ -1,6 +1,8 @@
-# Projeto Salic - Uma nova forma de consulta e navegação ao SALIC
+# VerSalic - Uma nova forma de consultar e navegar através dos projetos culturais da Lei Rouanet
 
-Este projeto demonstra o uso da [API SALIC](http://hmg.api.salic.cultura.gov.br/doc/#) para consultas aos dados do Sistema de Apoio às Leis de Incentivo à Cultura ([SALIC](http://novosalic.cultura.gov.br/cidadao/consultar)).
+Este aplicativo faz uso da [API SALIC](http://api.salic.cultura.gov.br/) para consultas aos dados do Sistema de Apoio às Leis de Incentivo à Cultura ([SALIC](http://salic.cultura.gov.br)). Para saber mais sobre a Lei Rouanet, acesse [rouanet.cultura.gov.br](http://rouanet.cultura.gov.br).
+
+O VerSalic pode ser utilizado em [Versalic.cultura.gov.br](http://versalic.cultura.gov.br). Descubra e compartilhe dados da Lei Rouanet!
 
 ## Configuração do ambiente
 ##### É preciso ter _node_, _npm_, _typescript_ e _angular cli_ instalados para a execução do projeto.
