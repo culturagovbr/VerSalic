@@ -58,4 +58,4 @@ $ ng serve
 Navegue para `http://localhost:4200/`. O App vai automaticamente se atualizar após qualquer mudança feita nos arquivos fonte.
 
 ## Link para a última versão hospedada
-Ainda em desenvolvimento!!! [Acesse aqui](http://hmg.app.api.salic.cultura.gov.br/). 
+[Acesse aqui](http://versalic.cultura.gov.br/). 
