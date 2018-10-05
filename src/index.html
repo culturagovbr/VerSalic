@@ -5,21 +5,14 @@
   <title>VERSALIC - Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura</title>
   <base href="/">
 
-  <!-- Meta tags para bots que não executem JS. Caso seja executado JS
-  serão usadas as fornecidas pelo MetaService nos components.-->
   <meta name="og:title" content="VERSALIC">
   <meta name="description" content="VERSALIC - Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura.">
   <meta name="og:description" content="VERSALIC - Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura.">
-  <!--<meta name="og:image" content="http://example.com/fallback-image.png">-->
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#226000">
-  <!--<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> -->
-  <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
-  <!--<link href="../node_modules/bootstrap_salic/css/bootstrap.min.css" rel="stylesheet">-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-
 </head>
 <body>
   <app-root>    
@@ -39,15 +32,15 @@
     </div>
   </app-root>
   <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }).catch(function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+        // Registration was successful
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }).catch(function(err) {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    }
   </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { MetaService } from '@nglibs/meta';
+import { MetaService } from '@ngx-meta/core';
 import { ApiService } from './../../services/api.service';
 import { DataFormatterService } from './../../services/data-formatter.service';
 import { ConfigurationService } from './../../services/configuration.service';
@@ -53,9 +53,12 @@ export class ProponentesComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.router.events.subscribe((path) => {
-      if (path.url != this.url) {
-        window.scrollTo(0, 0);
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.url != this.url) {
+          window.scrollTo(0, 0);
+        }
       }
     });
   }
@@ -93,6 +96,7 @@ export class ProponentesComponent implements OnInit, OnDestroy {
         console.log(resposta);
         if (this.listaProjetos === undefined) {
           this.listaProjetos = resposta.listaProjetosDoProponente;
+          window.scrollTo(0, 0);
         } else {
           for (const projeto of resposta.listaProjetosDoProponente) {
             this.listaProjetos.push(projeto);
@@ -112,14 +116,12 @@ export class ProponentesComponent implements OnInit, OnDestroy {
           this.router.navigate(['falha', err]);
         }
       },
-      () => { this.carregandoDadosProjetos = false; window.scrollTo(0, 0); });
+      () => { this.carregandoDadosProjetos = false; });
   }
 
   carregarMaisProjetos() {
-
-    this.queriesDeProjeto['offset'] = (this.totalDeItensCarregado + this.configurationService.limitResultados - 1) + '';
+    this.queriesDeProjeto['offset'] = this.totalDeItensCarregado + '';
     this.onLoadProjetos(this.idProponente);
-
   }
 
   compartilharTelegram() {

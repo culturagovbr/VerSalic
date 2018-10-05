@@ -7,6 +7,8 @@
   background-color: $background-salic;
   min-height: calc(100vh - 110px) !important;
 
+  #print-section { display: none; }
+
   .container {
     @media (min-width: 992px) { padding: 0px 56px; }
   }
@@ -42,6 +44,8 @@
       
       .links {
         display: inline-block;
+
+        i{ top: 3px; }
       }
       @media (max-width: 768px) { 
           white-space: initial;
@@ -223,6 +227,13 @@
     button.close { color: white !important; }
     
   }
+  .modal-divisor {
+    height: 1px;
+    background-color: $verde-claro-salic;
+    margin: 0px -35px 15px -35px;
+
+    @media (max-width: 480px) { margin: 0px -20px 15px -20px; }
+  }
   .modal-item {
 
     padding: 5px 20px;
@@ -242,14 +253,6 @@
     }
     .row-dark { background-color:#f8f8f8;}
 
-    .modal-divisor {
-      height: 1px;
-      background-color: $verde-claro-salic;
-      margin: 0px -35px 15px -35px;
-
-      @media (max-width: 480px) { margin: 0px -20px 15px -20px; }
-    }
-
     .modal-item-titulo { 
       font-size: 1.15em;
       font-weight: bold;
@@ -267,6 +270,18 @@
       margin-bottom: 6px;
     }
 
+  }
+  .modal-paginacao {
+    text-align: center;
+    border-top: 1px solid $verde-salic;
+    padding-bottom: 10px;
+    margin-bottom: -15px;
+    padding-top: 15px;
+    margin-left: -15px;
+    margin-right: -15px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: $cinza;
   }
 
   // Abas de Texto ----------------------------------------------------------
@@ -299,8 +314,8 @@
           background-color: $verde-claro-salic; 
           transition: border-bottom-color  0.4s;
           -webkit-transition: border-bottom-color  0.4s;
-          border-top-left-radius: 5px;
-          border-top-right-radius: 5px;
+          border-top-left-radius: 3px;
+          border-top-right-radius: 3px;
 
           &:hover {
               // color: $verde-claro-salic;
@@ -362,7 +377,7 @@
   .pagina-textos{
     background-color: white;
     border: 2px solid $verde-salic;
-    border-radius: 7px;
+    border-radius: 4px;
     margin: -25px -25px 50px -25px;
     padding: 25px;
     font-size: 1.0em; 

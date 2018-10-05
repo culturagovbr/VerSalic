@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MetaService } from '@nglibs/meta';
+import { MetaService } from '@ngx-meta/core';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +7,8 @@ import { MetaService } from '@nglibs/meta';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
   title = 'VERSALIC';
-
+  
   public menuEscondido: Boolean = true;
 
   constructor(private metaService: MetaService) {}
@@ -21,5 +20,4 @@ export class AppComponent {
   public expandido(event: any): void {
     // console.log(event);
   }
-
 }

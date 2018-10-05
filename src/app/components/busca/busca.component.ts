@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit,
          trigger, state, style, transition, animate, keyframes, HostListener, ViewChild, ChangeDetectorRef} from '@angular/core';
 import { Location, DatePipe } from '@angular/common';
 import { RequestOptions, URLSearchParams } from '@angular/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -48,6 +48,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
   inscricaoPesquisaPor: Subscription;
 
   JSON: any = JSON;
+  url: string = window.location.href;
 
   pesquisaPor = 'projetos';
   carregandoDados: Boolean = false;
@@ -57,7 +58,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
   linksParaCSVs: String[];
 
   // Configurações de Calendário
-  private opcoesCalendario: IMyOptions = {
+  public opcoesCalendario: IMyOptions = {
       dateFormat: 'dd/mm/yyyy',
       todayBtnTxt: 'Hoje',
       firstDayOfWeek: 'su',
@@ -69,7 +70,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
       dayLabels: {su: 'Dom', mo: 'Seg', tu: 'Ter', we: 'Qua', th: 'Qui', fr: 'Sex', sa: 'Sáb'},
       monthLabels: { 1: 'Jan', 2: 'Fev', 3: 'Mar', 4: 'Abr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Set', 10: 'Out', 11: 'Nov', 12: 'Dez' }
   };
-  private opcoesCalendario2: IMyOptions = {
+  public opcoesCalendario2: IMyOptions = {
       dateFormat: 'dd/mm/yyyy',
       todayBtnTxt: 'Hoje',
       firstDayOfWeek: 'su',
@@ -124,10 +125,9 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
                               'valor_projeto':    'Valor do Projeto' };
   queriesDeOrdemDePropostas: { [query: string]: String } = {};
   queriesDeOrdemDeProponentes: { [query: string]: String }
-                             = { '': 'Sem ordenamento',
-                                 'total_captado': 'Total Captado',
-                                 // 'cgccpf':        'CGCCPF (FALTA NA API)'
-                                 };
+                             = { 'total_captado': 'Total Captado'
+                                // ,'cgccpf':        'CGCCPF (FALTA NA API)'
+                                };
   queriesDeOrdemDeIncentivadores: { [query: string]: String }
                                 = { 'total_doado': 'Total Doado'
                                  // ,'cgccpf':        'CGCCPF (FALTA NA API)'
@@ -169,8 +169,8 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
               private router: Router,
               private location: Location,
               private apiService: ApiService,
-              private configurationService: ConfigurationService,
-              private dataFormatterService: DataFormatterService,
+              public configurationService: ConfigurationService,
+              public dataFormatterService: DataFormatterService,
               private datePipe: DatePipe,
               private changeDetectionRef: ChangeDetectorRef) { }
 
@@ -217,9 +217,11 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
 
-    this.router.events.subscribe((path) => {
-      if (path.url != this.location.path()) {
-        window.scrollTo(0, 0);
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.url != this.url) {
+          window.scrollTo(0, 0);
+        }
       }
     });
   }
@@ -382,8 +384,6 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   carregarPagina(indice: number) {
 
-    console.log('Indice da pg.: ' + indice);
-
     this.subirRespostasEstado = 'inativo';
     this.carregandoDados = true;
     this.buscaSemResultados = false;
@@ -429,6 +429,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
 
       switch (this.pesquisaPor) {
         case 'projetos':
+    
           this.apiService.getListaProjetos(this.queries).subscribe(
             resposta => {
               this.totalDeItems = resposta.total;
@@ -447,7 +448,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             },
             () => { this.carregandoDados = false; this.taxaDuracaoCarregamento = 0; window.scrollTo(0, 0);});
-
+          
         break;
 
         case 'propostas':
@@ -456,7 +457,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
               this.totalDeItems = resposta.total;
               this.numeroDeItems = resposta.count;
               this.listaPropostas = resposta.listaPropostas;
-
+              console.log(this.totalDeItems);
               this.subirRespostasEstado = 'ativo';
             },
             err => {
@@ -498,7 +499,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
               this.totalDeItems = resposta.total;
               this.numeroDeItems = resposta.count;
               this.listaIncentivadores = resposta.listaIncentivadores;
-
+              console.log(this.totalDeItems);
               this.subirRespostasEstado = 'ativo';
             },
             err => {
@@ -751,8 +752,8 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
 
     $(window).on('resize', function(e){
       if ($('#containerChipsRow').length > 0) {
-        console.log('Inneter Width 1:' + $('#containerChips').innerWidth());
-        console.log('Inner Width 2:' + $('#containerChipsRow').innerWidth());
+        //console.log('Inneter Width 1:' + $('#containerChips').innerWidth());
+        //console.log('Inner Width 2:' + $('#containerChipsRow').innerWidth());
         reAdjust();
       }
     });
@@ -795,7 +796,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @HostListener('window:scroll', ['$event'])
-  passouDoScrollTop(event) {
+  passouDoScrollTop() {
     if ($('#headerRespostas').offset() !== undefined) {
       if (window.pageYOffset > $('#headerRespostas').offset().top) {
         return true;

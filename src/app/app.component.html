@@ -1,34 +1,34 @@
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
-
-    <!-- Marca e Menu sanduíche ficam agrupados em telas menores -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed"
-              (click)="menuEscondido = !menuEscondido" aria-expanded="false"
-              [ngStyle]="{'background-color': menuEscondido ? '$verde-salic' : '$verde-claro-salic' }">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </button>
-      <a class="navbar-brand logo" [routerLink]="['/home']"><span class="logo-ver">VER</span><span class="logo-salic">SALIC</span></a>
-      <!--<span class="visible-xs">SIZE XS</span><span class="visible-sm">SIZE SM</span><span class="visible-md">SIZE MD</span><span class="visible-lg">SIZE LG</span>-->
-    </div>
-
-    <!-- Coleta os links navs, forms e outros tipos para a troca de menu -->
-    <div (collapsed)="escondido($event)"
-         (expanded)="expandido($event)"
-         [collapse]="menuEscondido" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li (click)="menuEscondido = true" routerLinkActive="active"><a [routerLink]="['/projetos']" [queryParams]="{ sort:'PRONAC', offset:0 }">BUSCA</a></li>
-        <li (click)="menuEscondido = true" routerLinkActive="active"><a [routerLink]="['/sobre']">SOBRE</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-
-  </div><!-- /.container-fluid -->
-</nav>
-
-<div id="app-outlet-container">
-  <router-outlet></router-outlet>
-</div>
-<footer class="footer">
-  <div class="container">
+    <div class="container-fluid">
+  
+      <!-- Marca e Menu sanduíche ficam agrupados em telas menores -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+                (click)="menuEscondido = !menuEscondido" aria-expanded="false"
+                [ngStyle]="{'background-color': menuEscondido ? '$verde-salic' : '$verde-claro-salic' }">
+          <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+        <a class="navbar-brand logo" [routerLink]="['/home']"><span class="logo-ver">VER</span><span class="logo-salic">SALIC</span></a>
+        <!--<span class="visible-xs">SIZE XS</span><span class="visible-sm">SIZE SM</span><span class="visible-md">SIZE MD</span><span class="visible-lg">SIZE LG</span>-->
+      </div>
+  
+      <!-- Coleta os links navs, forms e outros tipos para a troca de menu -->
+      <div (collapsed)="escondido($event)"
+           (expanded)="expandido($event)"
+           [collapse]="menuEscondido" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li (click)="menuEscondido = true" routerLinkActive="active"><a [routerLink]="['/projetos']" [queryParams]="{ sort:'PRONAC', offset:0 }">BUSCA</a></li>
+          <li (click)="menuEscondido = true" routerLinkActive="active"><a [routerLink]="['/sobre']">SOBRE</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+  
+    </div><!-- /.container-fluid -->
+  </nav>
+  
+  <div id="app-outlet-container">
+    <router-outlet></router-outlet>
   </div>
-</footer>
+  <footer class="footer">
+    <div class="container">
+    </div>
+  </footer>

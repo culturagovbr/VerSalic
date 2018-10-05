@@ -78,8 +78,9 @@
                 <div class="form-control-placeholder">Segmento</div>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="seletorSegmentoDoProjeto">
                   <li *ngFor="let segmento of segmentosDeProjetos.segmentosFiltrados(queries['area']); let i = index" role="menuitem">
-                    <a (click)="i > 0 ? queries['segmento'] = segmento.cod : queries['segmento'] = null;
-                                i > 0 ? queries['area'] = segmento.areaCod : queries['segmento'] = null;" class="dropdown-item">{{ segmento.nome }}</a>
+                    <a (click)="i > 0 ? queries['segmento'] = segmento['cod'] : queries['segmento'] = null; 
+                                i > 0 ? queries['area'] = segmento['areaCod'] : queries['segmento'] = null;" class="dropdown-item">{{ segmento['nome'] }}</a>
+
                   </li>
                 </ul>
               </div>
@@ -87,7 +88,7 @@
                 <select class="form-control" aria-labelledby="seletorSegmentoDoProjeto" [ngModel]="queries['segmento']"
                   (change)="mudarSegmentoPorSelect($event)"
                   [ngClass]="{'cheio': queries['segmento'] !== undefined && queries['segmento'] !== ''}">
-                  <option [value]="i > 0 ? segmento.cod : null" *ngFor="let segmento of segmentosDeProjetos.segmentosFiltrados(queries['area']); let i = index">{{ segmento.nome }} </option>
+                  <option [value]="i > 0 ? segmento['cod'] : null" *ngFor="let segmento of segmentosDeProjetos.segmentosFiltrados(queries['area']); let i = index">{{ segmento['nome'] }} </option>
                 </select>
                 <div class="form-control-placeholder">Segmento</div>
               </div>
@@ -397,9 +398,9 @@
           </div>
         </div>
 
-        <!-- Footer da Busca ============================================================== -->
-          <div class="row footer-busca">
-            <div class="col-lg-12">
+        <!-- Footer da Busca ============================================================== -->   
+        <div class="row footer-busca">
+          <div class="col-lg-12">
             <a (click)="buscaAvancada = !buscaAvancada">{{ buscaAvancada ? '&#x25B4; Busca Simples' : '&#x25B8; Busca Avançada' }}</a>
             <button *ngIf="buscaAvancada" class="btn btn-primary pull-right" type="submit" (click)="onRealizarBusca()">BUSCAR</button>
           </div>
@@ -420,7 +421,7 @@
             <div id="containerChipsRow" class="hidden-xs">
               <div class="chip-wrapper" *ngFor="let key of checaChipsValidos(keys(queriesRecebidas))">
                 <div class="chip" *ngIf="queriesRecebidas[key] != null && queriesRecebidas[key] != '' && queriesRecebidas[key] != undefined" >
-                    {{ formataChip (key) }}
+                    {{ formataChip(key) }}
                   <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)='removeQuery(key)'></span>
                 </div>
               </div>
@@ -432,7 +433,7 @@
           <div class="hidden-lg hidden-md container-chips-panel col-sm-12" [ngStyle]="{ display: filtrosEscondido ? 'none' : 'inline-block' }">
             <div class="chip-wrapper" *ngFor="let key of checaChipsValidos(keys(queriesRecebidas))">
               <div class="chip" *ngIf="queriesRecebidas[key] != null && queriesRecebidas[key] != '' && queriesRecebidas[key] != undefined" >
-                    {{ formataChip (key) }}
+                    {{ formataChip(key) }}
                 <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)='removeQuery(key)'></span>
               </div>
             </div>
@@ -441,9 +442,9 @@
 
           <!-- ORDENAÇÃO ==============================================-->
 
-          <div class="container-ordenacao col-lg-5 col-md-6 col-sm-12 col-xs-9"  *ngIf="keys(ordenarPorQueries).length > 0" aria-label="Ordenação">
-            <p class="header-respostas-titulo hidden-xs">Ordenar por: </p>
-            <div dropdown>
+          <div class="container-ordenacao col-lg-5 col-md-6 col-sm-12 col-xs-9">  
+            <p *ngIf="keys(ordenarPorQueries).length > 0" class="header-respostas-titulo hidden-xs">Ordenar por: </p>
+            <div *ngIf="keys(ordenarPorQueries).length > 0" aria-label="Ordenação" dropdown>
               <button class="btn btn-default dropdown-toggle" type="button" id="seletorOrdenarPor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"  dropdownToggle>
                 <span class="hidden-xs">{{ ordenarPorQueries[ordenarPor] }}</span>
                 <span class="visible-xs-inline-block">Ordenar</span>
@@ -453,15 +454,15 @@
                 <li *ngFor="let key of keys(ordenarPorQueries)" role="menuitem"><a (click)="ordenarPor = key; onRealizarBusca();" class="dropdown-item">{{ ordenarPorQueries[key] }}</a></li>
               </ul>
             </div>
-            <div class="btn-group" role="group">
-              <button (click)="ordenarDesc = !ordenarDesc; onRealizarBusca();"  [ngClass]="{'disabled': !ordenarDesc, 'enabled': ordenarDesc }" type="button" class="btn btn-default" alt="Ordenação crescente" aria-label="Ordenação crescente">
+            <div *ngIf="keys(ordenarPorQueries).length > 0" aria-label="Ordenação" class="btn-group" role="group">
+              <button (click)="ordenarDesc = !ordenarDesc; onRealizarBusca();" title="Ordenação crescente"  [ngClass]="{'disabled': !ordenarDesc, 'enabled': ordenarDesc }" type="button" class="btn btn-default" alt="Ordenação crescente" aria-label="Ordenação crescente">
                 <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
               </button>
-              <button (click)="ordenarDesc = !ordenarDesc; onRealizarBusca();"  [ngClass]="{'enabled': !ordenarDesc, 'disabled': ordenarDesc }" type="button" class="btn btn-default" alt="Ordenação decrescente" aria-label="Ordenação decrescente">
+              <button (click)="ordenarDesc = !ordenarDesc; onRealizarBusca();" title="Ordenação decrescente" [ngClass]="{'enabled': !ordenarDesc, 'disabled': ordenarDesc }" type="button" class="btn btn-default" alt="Ordenação decrescente" aria-label="Ordenação decrescente">
                 <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
               </button>
             </div>
-
+            
             <!-- BAIXAR CONSULTA ==============================================-->
            <span class="container-baixar">
               <button (click)="baixarCSVDaConsulta()" class="btn btn-default" [ngClass]="{'enabled': !carregandoDados, 'disabled': carregandoDados }"><span class="visible-xs-inline visible-lg-inline visible-md-inline hidden-sm">Baixar </span><span class="hidden-xs visible-sm-inline hidden-md">Baixar consulta </span><span class="glyphicon glyphicon-download" ></span></button>
@@ -481,7 +482,7 @@
           <div id="containerChipsRow" class="hidden-xs">
             <div class="chip-wrapper" *ngFor="let key of checaChipsValidos(keys(queriesRecebidas))">
               <div class="chip" *ngIf="queriesRecebidas[key] != null && queriesRecebidas[key] != '' && queriesRecebidas[key] != undefined" >
-                  {{ formataChip (key) }}
+                  {{ formataChip(key) }}
                 <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)='removeQuery(key)'></span>
               </div>
             </div>
@@ -493,7 +494,7 @@
         <div class="hidden-lg hidden-md container-chips-panel col-sm-12" [ngStyle]="{ display: filtrosEscondido ? 'none' : 'inline-block' }">
           <div class="chip-wrapper" *ngFor="let key of checaChipsValidos(keys(queriesRecebidas))">
             <div class="chip" *ngIf="queriesRecebidas[key] != null && queriesRecebidas[key] != '' && queriesRecebidas[key] != undefined" >
-                  {{ formataChip (key) }}
+                  {{ formataChip(key) }}
               <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)='removeQuery(key)'></span>
             </div>
           </div>
@@ -502,9 +503,9 @@
 
         <!-- ORDENAÇÃO ==============================================-->
 
-        <div class="container-ordenacao col-lg-5 col-md-6 col-sm-12 col-xs-9"  *ngIf="keys(ordenarPorQueries).length > 0" aria-label="Ordenação">
-          <p class="header-respostas-titulo hidden-xs">Ordenar por: </p>
-          <div dropdown>
+        <div class="container-ordenacao col-lg-5 col-md-6 col-sm-12 col-xs-9">  
+          <p *ngIf="keys(ordenarPorQueries).length > 0" class="header-respostas-titulo hidden-xs">Ordenar por: </p>
+          <div *ngIf="keys(ordenarPorQueries).length > 0" dropdown aria-label="Ordenação">
             <button class="btn btn-default dropdown-toggle" type="button" id="seletorOrdenarPor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"  dropdownToggle>
               <span class="hidden-xs">{{ ordenarPorQueries[ordenarPor] }}</span>
               <span class="visible-xs-inline-block">Ordenar</span>
@@ -514,11 +515,11 @@
               <li *ngFor="let key of keys(ordenarPorQueries)" role="menuitem"><a (click)="ordenarPor = key; onRealizarBusca();" class="dropdown-item">{{ ordenarPorQueries[key] }}</a></li>
             </ul>
           </div>
-          <div class="btn-group" role="group">
-            <button (click)="ordenarDesc = !ordenarDesc; onRealizarBusca();"  [ngClass]="{'disabled': !ordenarDesc, 'enabled': ordenarDesc }" type="button" class="btn btn-default" alt="Ordenação crescente" aria-label="Ordenação crescente">
+          <div *ngIf="keys(ordenarPorQueries).length > 0" class="btn-group" role="group" aria-label="Ordenação">
+            <button (click)="ordenarDesc = !ordenarDesc; onRealizarBusca();" title="Ordenação crescente"  [ngClass]="{'disabled': !ordenarDesc, 'enabled': ordenarDesc }" type="button" class="btn btn-default" alt="Ordenação crescente" aria-label="Ordenação crescente">
               <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
             </button>
-            <button (click)="ordenarDesc = !ordenarDesc; onRealizarBusca();"  [ngClass]="{'enabled': !ordenarDesc, 'disabled': ordenarDesc }" type="button" class="btn btn-default" alt="Ordenação decrescente" aria-label="Ordenação decrescente">
+            <button (click)="ordenarDesc = !ordenarDesc; onRealizarBusca();" title="Ordenação decrescente" [ngClass]="{'enabled': !ordenarDesc, 'disabled': ordenarDesc }" type="button" class="btn btn-default" alt="Ordenação decrescente" aria-label="Ordenação decrescente">
               <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
             </button>
           </div>
@@ -545,7 +546,7 @@
       <div class="col-sm-4 col-xs-6 itens-por-pagina" >
         <p>Itens por página: </p>
         <div dropdown>
-          <button class="btn btn-default dropdown-toggle" type="button" id="seletorNumeroDeItens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"  dropdownToggle>
+          <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="seletorNumeroDeItens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"  dropdownToggle>
             {{ configurationService.limitResultados }}
             <span class="caret"></span>
           </button>
@@ -557,11 +558,11 @@
 
       <div class="col-sm-4 col-xs-12 paginacao-superior" *ngIf="numeroDeItems > 0">
 
-        <pagination [totalItems]="totalDeItems"
-                    (pageChanged)="paginaAtual = $event.page; onTrocaPagina(paginaAtual)"
-                    [maxSize]=" maximoBotoes - 2"
+        <pagination [totalItems]="totalDeItems" 
+                    (pageChanged)="paginaAtual = $event.page; onTrocaPagina(paginaAtual);" 
+                    [maxSize]=" maximoBotoes - 2" 
                     class="pagination-sm"
-                    [boundaryLinks]="true"
+                    [boundaryLinks]="false" 
                     [rotate]="false"
                     [(ngModel)]="paginaAtual"
                     nextText="&#x25B8;"
@@ -595,14 +596,14 @@
               <div class="col-sm-5"><p class="resposta-label">Município: </p><p class="resposta-valor">{{ projeto.municipio }}, {{ projeto.UF }}</p></div>
             </div>
             <div class="row">
-              <div class="col-xs-7"><p class="resposta-label">Valor Projeto: </p><p class="resposta-valor-destaque" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_projeto) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_projeto) }}</p></div>
+              <div class="col-xs-7"><p class="resposta-label">Valor Proposta: </p><p class="resposta-valor-destaque" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_proposta) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_proposta) }}</p></div>
               <div class="col-xs-5"><p class="resposta-label">Valor Captado: </p><p class="resposta-valor-destaque" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_captado) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_captado) }}</p></div>
             </div>
           </div>
           <div class="card-botoes-container">
             <div class="card-botoes" [ngStyle]="{'border-top-color': !projeto.isResumoEscondido ? '#b3b3b3' : '#293623', 'border-left-color': !projeto.isResumoEscondido ? '#b3b3b3' : '#293623'}">
               <span class="card-botao-resumo" (click)="projeto.isResumoEscondido = !projeto.isResumoEscondido"
-                   [ngStyle]="{'background-color': !projeto.isResumoEscondido ? '#e0e0e0' : '#293623', 'border-color': !projeto.isResumoEscondido ? '#b3b3b3' : '#293623', 'border-bottom-right-radius': !projeto.isResumoEscondido ? '0px' : '5px'}">
+                   [ngClass]="{'card-botao-resumo-ativo': projeto.isResumoEscondido }" >
                 <a [ngStyle]="{'color': projeto.isResumoEscondido ? 'white' : '#226000'}">{{ !projeto.isResumoEscondido ? '&#9656;' : '&#9652;' }}&nbsp; RESUMO</a>
               </span>
 
@@ -633,7 +634,7 @@
           <div class="card-botoes-container">
             <div class="card-botoes" [ngStyle]="{'border-top-color': !proposta.isResumoEscondido ? '#b3b3b3' : '#293623', 'border-left-color': !proposta.isResumoEscondido ? '#b3b3b3' : '#293623'}">
               <span class="card-botao-resumo" (click)="proposta.isResumoEscondido = !proposta.isResumoEscondido"
-                   [ngStyle]="{'background-color': !proposta.isResumoEscondido ? '#e0e0e0' : '#293623', 'border-color': !proposta.isResumoEscondido ? '#b3b3b3' : '#293623', 'border-bottom-right-radius': !proposta.isResumoEscondido ? '0px' : '5px'}">
+                   [ngClass]="{'card-botao-resumo-ativo': proposta.isResumoEscondido }">
                 <a [ngStyle]="{'color': proposta.isResumoEscondido ? 'white' : '#226000'}">{{ !proposta.isResumoEscondido ? '&#9656;' : '&#9652;' }}&nbsp; RESUMO</a>
               </span>
 
@@ -731,14 +732,15 @@
     <p>Não encontramos {{ pesquisaPor }} com estes parâmetros de pesquisa :(</p>
     <p>Experimente mudar os termos de busca ou filtros aplicados.</p>
   </alert>
-
+  <div>
+   
   <div class="text-center" [ngStyle]="{ display: (numeroDeItems > 0) && !carregandoDados ? 'block' : 'none' }">
     <pagination [totalItems]="totalDeItems"
                 (pageChanged)="paginaAtual = $event.page; onTrocaPagina(paginaAtual);"
                 [maxSize]=" maximoBotoes + 2"
                 class="pagination-sm"
-                [boundaryLinks]="true"
-                [rotate]="false"
+                [boundaryLinks]="false" 
+                [rotate]="false"  
                 [(ngModel)]="paginaAtual"
                 nextText="&#x25B8;"
                 lastText="&#x25B8;&#x25B8;"

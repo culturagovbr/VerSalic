@@ -4,22 +4,17 @@
       <span *ngIf="!carregandoDados" class="baixar"><p>
                 <img class="botao-icone" alt="Ícone de Projetos" src="../../../assets/ic_projetos.svg"/>
                 &nbsp;Pagina de Projeto - baixar:&nbsp;&nbsp;&nbsp;
-                <span class="links"><a filename="projeto.json" target="projeto.json" href="{{ configurationService.ApiUrl + 'projetos/' + PRONAC }}">json</a> | 
-                <a filename="projeto.csv" target="projeto.csv" href="{{ configurationService.ApiUrl + 'projetos/' + PRONAC + '?format=csv' }}">csv</a> | 
-                <a filename="projeto.xml" target="projeto.xml" href="{{ configurationService.ApiUrl + 'projetos/' + PRONAC + '?format=xml' }}">xml</a></span></p>
+                <span class="links"><a filename="projeto.json" target="projeto.json" href="{{ configurationService.ApiUrl + 'projetos/' + PRONAC }}" title="Baixar dados em formato JSON.">json</a> | 
+                <a filename="projeto.csv" target="projeto.csv" href="{{ configurationService.ApiUrl + 'projetos/' + PRONAC + '?format=csv' }}" title="Baixar dados em formato CSV.">csv</a> | 
+                <a filename="projeto.xml" target="projeto.xml" href="{{ configurationService.ApiUrl + 'projetos/' + PRONAC + '?format=xml' }}" title="Baixar dados em formato XML.">xml</a>
+                <!--| <a title="Imprimir página." (click)="print()"><i class="glyphicon glyphicon-print"></i></a>-->
+                </span></p>
       </span>
-      <div *ngIf="!carregandoDados" class="compartilhar"> 
+      <div *ngIf="!carregandoDados" class="compartilhar" title="Compartilhar nas Redes Sociais"> 
       <p>Compartilhe:&nbsp;&nbsp;</p>
-      <share-buttons class="withCount" 
-                  [defaultStyle]="false"
-                  [url]="url" 
-                  [title]="'Projeto: ' + projeto.nome" 
-                  [description]="'VERSALIC - Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura.'"
-                  [stumbleUpOn]="false" [pinterest]="false" [tumblr]="false" [linkedIn]="false"
-                  [showCount]="true" ></share-buttons>
-      <span class="sb-buttons"><span class="sb-button">
-        <button (click)="compartilharTelegram()"><span class="sb-template"><i class="fa fa-paper-plane"></i></span></button>
-      </span></span>
+      <share-buttons class="withCount"
+                    [url]="url" 
+                    [title]="'Projeto: ' + projeto.nome" ></share-buttons>
     </div>
     </div>
   </div>
@@ -37,6 +32,7 @@
       <p>Carregando Projeto...</p>
     </div>
 
+    <!-- BLOCO DE DADOS GERAIS =============================================-->
     <div  *ngIf="!carregandoDados && projeto != undefined" class="row">
       <div class="pagina-infos col-sm-7">
         <div class="row">
@@ -64,51 +60,52 @@
           <div *ngIf="!isProvidenciasEscondido" class="col-sm-12"><p class="pagina-infos-label">Providências: </p><p class="paginas-info-valor">{{ projeto.providencia }}</p></div>
         </div> 
 
+        <!-- BLOCO DE LISTAS ASSOCIADAS AO PROJETO =============================================-->
         <div class="pagina-listas">
           <div class="row">
             <p class="pagina-subtitulo col-sm-12">Listas associadas</p>
             <div class="col-sm-6 col-xs-12 col-borda-dir">
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Distribuição: </p><p class="pagina-infos-valor">{{ obterLength('distribuicao') === 1 ? obterLength('distribuicao') + ' item.' : obterLength('distribuicao') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class=" btn btn-primary" (click)="mostrarModalDeDistribuicao();" [disabled]="obterLength('distribuicao') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class=" btn btn-primary" title="Ver lista de Distribuições" (click)="mostrarModalDeDistribuicao();" [disabled]="obterLength('distribuicao') <= 0">Ver lista</button></div>
               </div>
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Divulgação: </p><p class="pagina-infos-valor">{{ obterLength('divulgacao') === 1 ? obterLength('divulgacao') + ' item.' : obterLength('divulgacao') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class="btn btn-primary" (click)="mostrarModalDeDivulgacao();" [disabled]="obterLength('divulgacao') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class="btn btn-primary" title="Ver lista de Divulgações" (click)="mostrarModalDeDivulgacao();" [disabled]="obterLength('divulgacao') <= 0">Ver lista</button></div>
               </div>
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Documentos anexos: </p><p class="pagina-infos-valor">{{ obterLength('documentos_anexados') === 1 ? obterLength('documentos_anexados') + ' item.' : obterLength('documentos_anexados') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class="btn btn-primary" (click)="mostrarModalDeDocumentosAnexos();" [disabled]="obterLength('documentos_anexados') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class="btn btn-primary" title="Ver lista de Documentos Anexados" (click)="mostrarModalDeDocumentosAnexos();" [disabled]="obterLength('documentos_anexados') <= 0">Ver lista</button></div>
               </div>
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Marcas anexas: </p><p class="pagina-infos-valor">{{ obterLength('marcas_anexadas') === 1 ? obterLength('marcas_anexadas') + ' item.' : obterLength('marcas_anexadas') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class="btn btn-primary" (click)="mostrarModalDeMarcasAnexas();" [disabled]="obterLength('marcas_anexadas') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class="btn btn-primary" title="Ver lista de Marcas Anexadas" (click)="mostrarModalDeMarcasAnexas();" [disabled]="obterLength('marcas_anexadas') <= 0">Ver lista</button></div>
               </div>
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Deslocamentos: </p><p class="pagina-infos-valor">{{ obterLength('deslocamento') === 1 ? obterLength('deslocamento') + ' item.' : obterLength('deslocamento') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class=" btn btn-primary" (click)="mostrarModalDeDeslocamentos();" [disabled]="obterLength('deslocamento') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class=" btn btn-primary" title="Ver lista de Deslocamentos" (click)="mostrarModalDeDeslocamentos();" [disabled]="obterLength('deslocamento') <= 0">Ver lista</button></div>
               </div>
             </div>
             <div class="col-sm-6 col-xs-12">
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Prorrogação: </p><p class="pagina-infos-valor">{{ obterLength('prorrogacao') === 1 ? obterLength('prorrogacao') + ' item.' : obterLength('prorrogacao') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class="btn btn-primary" (click)="mostrarModalDeProrrogacao();" [disabled]="obterLength('prorrogacao') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class="btn btn-primary" title="Ver lista de Prorrogações" (click)="mostrarModalDeProrrogacao();" [disabled]="obterLength('prorrogacao') <= 0">Ver lista</button></div>
               </div>
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Relatório fisco: </p><p class="pagina-infos-valor">{{ obterLength('relatorio_fisco') === 1 ? obterLength('relatorio_fisco') + ' item.' : obterLength('relatorio_fisco') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class=" btn btn-primary" (click)="mostrarModalDeRelatorioFisico();" [disabled]="obterLength('relatorio_fisco') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class=" btn btn-primary" title="Ver lista de Relatórios Fiscos" (click)="mostrarModalDeRelatorioFisico();" [disabled]="obterLength('relatorio_fisco') <= 0">Ver lista</button></div>
               </div>
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Certidões negativas: </p><p class="pagina-infos-valor">{{ obterLength('certidoes_negativas') === 1 ? obterLength('certidoes_negativas') + ' item.' : obterLength('certidoes_negativas') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class="btn btn-primary" (click)="mostrarModalDeCertidoesNegativas();" [disabled]="obterLength('certidoes_negativas') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class="btn btn-primary" title="Ver lista de Certidões Negativas" (click)="mostrarModalDeCertidoesNegativas();" [disabled]="obterLength('certidoes_negativas') <= 0">Ver lista</button></div>
               </div>
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Readequações: </p><p class="pagina-infos-valor">{{ obterLength('readequacoes') === 1 ? obterLength('readequacoes') + ' item.' : obterLength('readequacoes') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class="btn btn-primary" (click)="mostrarModalDeReadequacoes();" [disabled]="obterLength('readequacoes') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class="btn btn-primary" title="Ver lista de Readequações" (click)="mostrarModalDeReadequacoes();" [disabled]="obterLength('readequacoes') <= 0">Ver lista</button></div>
               </div>
               <div class="row">
                 <div class="col-xs-7"><p class="pagina-infos-label">Relação bens capital: </p><p class="pagina-infos-valor">{{ obterLength('relacao_bens_captal') === 1 ? obterLength('relacao_bens_captal') + ' item.' : obterLength('relacao_bens_captal') + ' itens.' }}</p></div>
-                <div class="col-xs-5 text-right"><button class="btn btn-primary" (click)="mostrarModalDeRelacaoBensCapital();" [disabled]="obterLength('relacao_bens_captal') <= 0">Ver lista</button></div>
+                <div class="col-xs-5 text-right"><button class="btn btn-primary" title="Ver lista de Relação Bens Capital" (click)="mostrarModalDeRelacaoBensCapital();" [disabled]="obterLength('relacao_bens_captal') <= 0">Ver lista</button></div>
               </div>
             </div>
           </div>
@@ -121,35 +118,35 @@
         <div class="pagina-bloco">
           <div class="row">
             <div class="col-xs-6"><p class="pagina-infos-label">Valor proposta: </p><p class="pagina-infos-valor" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_proposta) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_proposta) }}</p></div>
-            <div class="col-xs-6"><p class="pagina-infos-label">Valor projeto: </p><p class="pagina-infos-valor" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_projeto) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_projeto) }}</p></div>
-          </div> 
-          <div class="row">
-            <div class="col-xs-6"><p class="pagina-infos-label">Valor solicitado: </p><p class="pagina-infos-valor" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_solicitado) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_solicitado) }}</p></div>
             <div class="col-xs-6"><p class="pagina-infos-label">Valor aprovado: </p><a [ngStyle]="{ 'pointer-events': obterLength('relacao_pagamentos') <= 0 ? 'none' : 'initial'}" (click)="obterLength('relacao_pagamentos') > 0 ? mostrarModalDeRelacaoPagamentos() : null" class="pagina-infos-valor" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_aprovado) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_aprovado) }}</a></div>
           </div> 
           <div class="row">
-            <div class="col-xs-6"><p class="pagina-infos-label">Valor captado: </p><a [ngStyle]="{ 'pointer-events': obterLength('captacoes') <= 0 ? 'none' : 'initial'}" (click)="obterLength('captacoes') > 0 ? mostrarModalDeCaptacoes() : null" class="pagina-infos-valor" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_captado) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_captado) }}</a></div>
+            <div class="col-xs-6"><p class="pagina-infos-label">Valor solicitado: </p><p class="pagina-infos-valor" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_solicitado) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_solicitado) }}</p></div>
             <div class="col-xs-6"><p class="pagina-infos-label">Outras fontes: </p><p class="pagina-infos-valor" title="{{ dataFormatterService.formataValorEmReais(projeto.outras_fontes) }}">{{ dataFormatterService.formataValorEmReais(projeto.outras_fontes) }}</p></div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-6"><p class="pagina-infos-label">Valor captado: </p><a [ngStyle]="{ 'pointer-events': obterLength('captacoes') <= 0 ? 'none' : 'initial'}" (click)="obterLength('captacoes') > 0 ? mostrarModalDeCaptacoes() : null" class="pagina-infos-valor" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_captado) }}  - Ver lista de Captações">{{ dataFormatterService.formataValorEmReais(projeto.valor_captado) }}</a></div>
+            <div class="col-xs-6"><p class="pagina-infos-label">Valor projeto: </p><p class="pagina-infos-valor" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_projeto) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_projeto) }}</p></div>
           </div> 
         </div>
 
-        <!-- PAGINAS DAS ENTIDADES E INFO RELACIONADAS =============================================-->
+        <!-- PAGINAS DAS ENTIDADES RELACIONADAS =============================================-->
         <div class="pagina-infos pagina-entidades">
           <div class="row">
             <div class="col-xs-7"><p class="pagina-subtitulo">Proponente&nbsp;&nbsp;<img class="botao-icone" alt="Ícone de Proponentes" src="../../../assets/ic_proponentes.svg"/></p></div>
-            <div class="col-xs-5 text-right botao-verde-claro"><button [routerLink]="['/proponentes', dataFormatterService.extraiIdDaUrl(projeto._links.proponente)]" type="button" class="btn btn-primary">Propontente</button></div>
+            <div class="col-xs-5 text-right botao-verde-claro"><button title="Ir para página do Proponente deste Projeto" [routerLink]="['/proponentes', dataFormatterService.extraiIdDaUrl(projeto._links.proponente)]" type="button" class="btn btn-primary">Propontente</button></div>
             <div class="col-xs-7"><p class="pagina-infos-label">Proponente: </p><p class="pagina-infos-valor" id="nomeProponente">{{ projeto.proponente }}</p></div>
             <div class="col-xs-5"><p class="pagina-infos-label">CPF/CNPJ: </p><p class="pagina-infos-valor" id="cgccpfProponente">{{ dataFormatterService.formataCGCCPF(projeto.cgccpf) }}</p></div>
           </div>
           <div class="row">
             <div class="col-xs-7"><p class="pagina-subtitulo">Incentivadores&nbsp;&nbsp;<img class="botao-icone" alt="Ícone de Incentivadores" src="../../../assets/ic_incentivadores.svg"/></p></div>
-            <div class="col-xs-5 text-right botao-verde-claro"><button [routerLink]="['/incentivadores']" [queryParams]="{'PRONAC': projeto.PRONAC}" type="button" class="btn btn-primary" [disabled]="obterLength('captacoes') <= 0">Incentivadores</button></div>
+            <div class="col-xs-5 text-right botao-verde-claro"><button title="Consulta por Incentivadores deste Projeto" [routerLink]="['/incentivadores']" [queryParams]="{'PRONAC': projeto.PRONAC}" type="button" class="btn btn-primary" [disabled]="obterLength('captacoes') <= 0">Incentivadores</button></div>
             <div class="col-xs-7"><p class="pagina-infos-label">Captações: </p><p class="pagina-infos-valor">{{ obterLength('captacoes') === 1 ? obterLength('captacoes') + ' item.' : obterLength('captacoes') + ' itens.' }}</p></div>
             <div class="col-xs-5 text-right"><button class="btn btn-primary" (click)="mostrarModalDeCaptacoes();" [disabled]="obterLength('captacoes') <= 0">Captações</button></div>
           </div>
           <div class="row">
             <div class="col-xs-7"><p class="pagina-subtitulo">Fornecedores&nbsp;&nbsp;<img class="botao-icone" alt="Ícone de Fornecedores" src="../../../assets/ic_fornecedores.svg"/></p></div>
-            <div class="col-xs-5 text-right botao-verde-claro"><button [routerLink]="['/fornecedores']" [queryParams]="{'PRONAC': projeto.PRONAC}" type="button" class="btn btn-primary" [disabled]="obterLength('relacao_pagamentos') <= 0">Fornecedores</button></div>
+            <div class="col-xs-5 text-right botao-verde-claro"><button title="Consulta por Fornecedores deste Projeto" [routerLink]="['/fornecedores']" [queryParams]="{'PRONAC': projeto.PRONAC}" type="button" class="btn btn-primary" [disabled]="obterLength('relacao_pagamentos') <= 0">Fornecedores</button></div>
             <div class="col-xs-7"><p class="pagina-infos-label">Relação pagamentos: </p><p class="pagina-infos-valor">{{ obterLength('relacao_pagamentos') === 1 ? obterLength('relacao_pagamentos') + ' item.' : obterLength('relacao_pagamentos') + ' itens.' }}</p></div>
             <div class="col-xs-5 text-right"><button class="btn btn-primary" (click)="mostrarModalDeRelacaoPagamentos();" [disabled]="obterLength('relacao_pagamentos') <= 0">Produtos</button></div>
           </div>
@@ -157,6 +154,7 @@
       </div>
     </div>
 
+    <!-- ABAS E DEMAIS INFOS -->
     <div [ngStyle]="{ opacity: carregandoDados ? '0' : '1' }" class="container-abas row">
       <div class="scroller scroller-left"><i class="glyphicon glyphicon-chevron-left"></i></div>
       <div class="scroller scroller-right"><i class="glyphicon glyphicon-chevron-right"></i></div>
@@ -176,7 +174,7 @@
       </div>
     </div>  
     <div *ngIf="!carregandoDados && projeto != undefined" class="pagina-textos">   
-      <p>{{ dataFormatterService.verificaSeHaTexto(projeto[textoSelecionado]) }}</p>
+      <p [innerHTML]="dataFormatterService.verificaSeHaTexto(projeto[textoSelecionado])"></p>
     </div>
   </div>
 
@@ -269,11 +267,11 @@
             <div *ngFor="let documento of projeto._embedded.documentos_anexados; let i = index;">
             <div class="modal-item ">
               <div *ngIf="i > 0" class="modal-divisor"></div>
-              <div class="modal-item-titulo" title="{{ documento.produto }}"><p>{{ documento.nome }}</p></div>
+              <div class="modal-item-titulo" title="{{ documento.produto }}"><a href="{{ documento.link }}" title="Baixar arquivo.">{{ documento.nome }}</a></div>
                 <div class="row">
-                  <div class="col-md-6 col-sm-12 col-xs-12"><p class="modal-item-label">Classificação: </p><p class="modal-item-valor">{{ dataFormatterService.verificaSeHaTexto(documento.classificacao) }}</p></div>
-                  <div class="col-md-4 col-sm-8 col-xs-12"><p class="modal-item-label">Data: </p><p class="modal-item-valor">{{ dataFormatterService.formataDataSemHora(documento.data) }}</p></div>
-                  <div class="col-md-2 col-sm-4 col-xs-12"><p class="modal-item-label">Link: </p><a class="modal-item-valor" href="{{ documento.link }}">Clique aqui.</a></div>
+                  <div class="col-md-8 col-sm-12 col-xs-12"><p class="modal-item-label">Classificação: </p><p class="modal-item-valor">{{ dataFormatterService.verificaSeHaTexto(documento.classificacao) }}</p></div>
+                  <div class="col-md-2 col-sm-8 col-xs-12"><p class="modal-item-label">Data: </p><p class="modal-item-valor">{{ dataFormatterService.formataDataSemHora(documento.data) }}</p></div>
+                  <div class="col-md-2 col-sm-4 col-xs-12"><p class="modal-item-label">Link do Arquivo: </p><a class="modal-item-valor" href="{{ documento.link }}" title="Baixar arquivo.">Clique aqui.</a></div>
                 </div>
               </div>
             </div>
@@ -327,12 +325,12 @@
             <div *ngFor="let marca of projeto._embedded.marcas_anexadas; let i = index;">
             <div class="modal-item ">
               <div *ngIf="i > 0" class="modal-divisor"></div>
-              <div class="modal-item-titulo" title="{{ marca.nome_arquivo }}"><p>{{ marca.nome_arquivo }}</p></div>
+              <div class="modal-item-titulo" title="{{ marca.nome_arquivo }}"><a href="{{ marca.link }}" title="Baixar arquivo.">{{ marca.nome_arquivo }}</a></div>
                 <div class="row row-dark">
                   <div class="col-md-3 col-sm-6 col-xs-12"><p class="modal-item-label">Id do arquivo: </p><p class="modal-item-valor">{{ marca.id_arquivo }}</p></div> 
-                  <div class="col-md-3 col-sm-5 col-xs-12"><p class="modal-item-label">Id documento: </p><p class="modal-item-valor">{{ marca.id_documento }}</p></div>
-                  <div class="col-md-2 col-sm-4 col-xs-12"><p class="modal-item-label">Link: </p><a class="modal-item-valor" href="{{ marca.link }}">Clique aqui.</a></div>
-                  <div class="col-md-4 col-sm-8 col-xs-12"><p class="modal-item-label">Data: </p><p class="modal-item-valor">{{ dataFormatterService.formataDataSemHora(marca.data_envio) }}</p></div>
+                  <div class="col-md-3 col-sm-6 col-xs-12"><p class="modal-item-label">Id documento: </p><p class="modal-item-valor">{{ marca.id_documento }}</p></div>
+                  <div class="col-md-3 col-sm-6 col-xs-12"><p class="modal-item-label">Data: </p><p class="modal-item-valor">{{ dataFormatterService.formataDataSemHora(marca.data_envio) }}</p></div>
+                  <div class="col-md-3 col-sm-6 col-xs-12"><p class="modal-item-label">Link do Arquivo: </p><a class="modal-item-valor" href="{{ marca.link }}" title="Baixar arquivo.">Clique aqui.</a></div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12"><p class="modal-item-label">Descrição: </p><p class="modal-item-valor">{{ dataFormatterService.verificaSeHaTexto(marca.descricao) }}</p></div>
@@ -491,7 +489,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <div *ngFor="let relacao of projeto._embedded.relacao_pagamentos; let i = index;">
+            <div *ngFor="let relacao of projeto._embedded.relacao_pagamentos.slice(0, relacaoPagamentosCarregadas + 20); let i = index;">
             <div class="modal-item ">
               <div *ngIf="i > 0" class="modal-divisor"></div>
               <div class="modal-item-titulo" title="{{ relacao.nome }}"><p>{{ relacao.nome }}</p></div>
@@ -506,8 +504,8 @@
                 </div>  
                 <div class="row">
                   <div class="col-sm-3 col-xs-12"><p class="modal-item-label">Valor do pagamento: </p><p class="modal-item-valor-destaque" title="{{ dataFormatterService.formataValorEmReais(relacao.valor_pagamento) }}">{{ dataFormatterService.formataValorEmReais(relacao.valor_pagamento) }}</p></div>
-                  <div class="col-sm-4 col-xs-6"><p class="modal-item-label">Data aprovação: </p><p class="modal-item-valor">{{ dataFormatterService.formataData(relacao.data_aprovacao) }}</p></div>
-                  <div class="col-sm-4 col-xs-6"><p class="modal-item-label">Data pagamento: </p><p class="modal-item-valor">{{ dataFormatterService.formataData(relacao.data_pagamento) }}</p></div>
+                  <div class="col-sm-4 col-xs-6"><p class="modal-item-label">Data pagamento: </p><p class="modal-item-valor">{{ dataFormatterService.formataDataSemHora(relacao.data_pagamento) }}</p></div>
+                  <div class="col-sm-4 col-xs-6"><p class="modal-item-label">Data aprovação: </p><p class="modal-item-valor">{{ dataFormatterService.formataDataSemHora(relacao.data_aprovacao) }}</p></div>               
                 </div>
                 <div class="row  row-dark">
                   <div class="col-xs-12"><p class="modal-item-label">Nome do arquivo: </p><p class="modal-item-valor" title="{{ relacao.nm_arquivo }}">{{ relacao.nm_arquivo }}</p></div>
@@ -526,6 +524,10 @@
                   <div class="col-sm-5 col-xs-12"><p class="modal-item-label" title="Id da Planilha Eletrônica de Aprovação" >Id planilha eletrônica: </p><p class="modal-item-valor" title="{{ relacao.id_planilha_aprovacao }}">{{ relacao.id_planilha_aprovacao }}</p></div>
                 </div>              
               </div>
+            </div>
+            <div class="modal-paginacao">
+              <p *ngIf="relacaoPagamentosCarregadas + 20 <= obterLength('relacao_pagamentos')">Exibidos {{ relacaoPagamentosCarregadas + 20 }} de {{ obterLength('relacao_pagamentos') }} itens.&nbsp;&nbsp;<button (click)="incrementarRelacaoPagamentos();" class="btn btn-default">Mostrar mais.</button></p>
+              <p *ngIf="relacaoPagamentosCarregadas + 20 > obterLength('relacao_pagamentos')">Exibidos {{ obterLength('relacao_pagamentos') }} itens.</p>
             </div>
           </div>
         </div>
@@ -597,33 +599,24 @@
             <div *ngFor="let relacao of projeto._embedded.relacao_bens_captal; let i = index;">
             <div class="modal-item ">
               <div *ngIf="i > 0" class="modal-divisor"></div>
-              <!--<div class="modal-item-titulo" title="{{ relacao.nome_produto }}"><p>{{ relacao.nome_produto }}</p></div>
-                <div class="row  row-dark">
-                  <div class="col-md-6 col-sm-5 col-xs-12"><p class="modal-item-label">Nome do fornecedor: </p><p class="modal-item-valor">{{ readequacao.nome_fornecedor }}</p></div>
-                  <div class="col-md-4 col-sm-4 col-xs-12"><p class="modal-item-label">CPF/CNPJ: </p><p class="modal-item-valor">{{ dataFormatterService.formataCGCCPF(readequacao.cgccpf) }}</p></div>
+              <div class="modal-item-titulo" title="{{ relacao.Titulo }}"><p>{{ relacao.titulo }}</p></div>
+                <div class="row row-dark">
+                  <div class="col-sm-4 col-xs-12"><p class="modal-item-label">Item: </p><p class="modal-item-valor-destaque" title="{{ relacao.Item }}">{{ relacao.Item }}</p></div>
+                  <div class="col-sm-4 col-xs-6"><p class="modal-item-label">Valor unitário: </p><p class="modal-item-valor">{{ dataFormatterService.formataValorEmReais(relacao.vlUnitario) }}</p></div>
+                  <div class="col-sm-4 col-xs-6"><p class="modal-item-label">Valor total: </p><p class="modal-item-valor">{{ dataFormatterService.formataValorEmReais(relacao.vlTotal) }}</p></div>
                 </div>
-                </div>  
                 <div class="row">
-                  <div class="col-sm-3 col-xs-12"><p class="modal-item-label">Valor do pagamento: </p><p class="modal-item-valor-destaque" title="{{ dataFormatterService.formataValorEmReais(readequacao.valor_pagamento) }}">{{ dataFormatterService.formataValorEmReais(readequacao.valor_pagamento) }}</p></div>
-                  <div class="col-sm-4 col-xs-6"><p class="modal-item-label">Data aprovação: </p><p class="modal-item-valor">{{ dataFormatterService.formataData(readequacao.data_aprovacao) }}</p></div>
-                  <div class="col-sm-4 col-xs-6"><p class="modal-item-label">Data pagamento: </p><p class="modal-item-valor">{{ dataFormatterService.formataData(readequacao.data_pagamento) }}</p></div>
-                </div>
-                <div class="row  row-dark">
-                  <div class="col-xs-12"><p class="modal-item-label">Nome do arquivo: </p><p class="modal-item-valor" title="{{ readequacao.nm_arquivo }}">{{ readequacao.nm_arquivo }}</p></div>
-                </div>  
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6"><p class="modal-item-label">Tipo do documento: </p><p class="modal-item-valor" title="{{ readequacao.tipo_documento}}">{{ readequacao.tipo_documento}}</p></div>
-                  <div class="col-xs-12 col-sm-6"><p class="modal-item-label">Forma de pagamento: </p><p class="modal-item-valor" title="{{ readequacao.tipo_forma_pagamento }}">{{ readequacao.tipo_forma_pagamento }}</p></div>
+                  <div class="col-xs-6 col-sm-4"><p class="modal-item-label">Quantidade: </p><p class="modal-item-valor" title="{{ relacao.Qtde }}">{{ relacao.Qtde }}</p></div>
+                  <div class="col-xs-6 col-sm-4"><p class="modal-item-label">Data pagamento: </p><p class="modal-item-valor" title="{{ dataFormatterService.formataDataSemHora(relacao.dtPagamento) }}">{{ dataFormatterService.formataDataSemHora(relacao.dtPagamento) }}</p></div>
+                  <div class="col-xs-6 col-sm-4"><p class="modal-item-label">Número do comprovante </p><p class="modal-item-valor" title="{{ relacao.nrComprovante }}">{{ relacao.nrComprovante }}</p></div>
                 </div> 
                 <div class="row  row-dark">
-                  <div class="col-xs-6"><p class="modal-item-label" title="Número do Comprovante">Número comprovante: </p><p class="modal-item-valor" title="{{ readequacao.nr_comprovante }}">{{ readequacao.nr_comprovante }}</p></div>
-                  <div class="col-xs-6"><p class="modal-item-label" title="Número do Documennto de Pagamento">N. documento pagamento: </p><p class="modal-item-valor" title="{{ readequacao.nr_documento_pagamento }}">{{ readequacao.nr_documento_pagamento }}</p></div>
+                  <div class="col-xs-6"><p class="modal-item-label" title="Fabricante">Fabricante: </p><p class="modal-item-valor" title="{{ dataFormatterService.verificaSeHaTexto(relacao.Fabricante) }}">{{ dataFormatterService.verificaSeHaTexto(relacao.Fabricante) }}</p></div>
+                  <div class="col-xs-6"><p class="modal-item-label" title="Marca">Marca: </p><p class="modal-item-valor" title="{{ dataFormatterService.verificaSeHaTexto(relacao.Marca) }}">{{ dataFormatterService.verificaSeHaTexto(relacao.Marca) }}</p></div>
                 </div> 
                 <div class="row">
-                  <div class="col-sm-2 col-xs-4"><p class="modal-item-label" title="Id do Arquivo">Id arquivo: </p><p class="modal-item-valor" title="{{ readequacao.id_arquivo }}">{{ readequacao.id_arquivo }}</p></div>  
-                  <div class="col-sm-5 col-xs-8"><p class="modal-item-label" title="Id do Comprovante de Pagamento" >Id comprovante pagamento: </p><p class="modal-item-valor" title="{{ readequacao.id_comprovante_pagamento }}">{{ readequacao.id_comprovante_pagamento }}</p></div>
-                  <div class="col-sm-5 col-xs-12"><p class="modal-item-label" title="Id da Planilha Eletrônica de Aprovação" >Id planilha eletrônica: </p><p class="modal-item-valor" title="{{ readequacao.id_planilha_aprovacao }}">{{ readequacao.id_planilha_aprovacao }}</p></div>
-                </div>  -->            
+                  <div class="col-xs-12"><p class="modal-item-label" title="Especificação">Especificação: </p><p class="modal-item-valor" title="{{ relacao.Especificacao }}">{{ relacao.Especificacao}}</p></div>  
+                </div>           
               </div>
             </div>
           </div>

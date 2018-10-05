@@ -244,7 +244,7 @@
                     text-decoration: none;
                 }
             }
-
+            
             .card-botao-resumo {
                 background-color: $cinza;
                 border-right: none;
@@ -257,7 +257,23 @@
                 border-left: 1px solid $cinza-escuro;   
                 margin: -1px;
                 @media all and (max-width: 330px){ padding: 8px 15px 9px 10px; }
-                &:hover { border-right: 1px solid $cinza-escuro; }
+
+                &:hover { 
+                    border-right: 1px solid $cinza-escuro; 
+                    background-color: #d2d2d2;
+                    border-bottom-right-radius: 0px;
+                }
+            }
+
+            .card-botao-resumo-ativo {
+                background-color: #293623 !important;
+                border-color: #293623 !important;
+                border-bottom-right-radius: 5px;
+
+                &:hover { 
+                    border-right: 0px; 
+                    border-bottom-right-radius: 5px;
+                }
             }
 
             .card-botao-ver {

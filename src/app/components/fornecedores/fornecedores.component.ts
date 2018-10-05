@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Event, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { MetaService } from '@nglibs/meta';
+import { MetaService } from '@ngx-meta/core';
 import { ApiService } from './../../services/api.service';
 import { DataFormatterService } from './../../services/data-formatter.service';
 import { ConfigurationService } from './../../services/configuration.service';
@@ -23,9 +23,9 @@ export class FornecedoresComponent implements OnInit, OnDestroy {
   JSON: any = JSON;
   url: string = location.href;
 
-  carregandoDados: Boolean = false;
-  carregandoDadosProdutos: Boolean = false;
-  buscaPorProdutosSemResultados: Boolean = false;
+  carregandoDados: boolean = false;
+  carregandoDadosProdutos: boolean = false;
+  buscaPorProdutosSemResultados: boolean = false;
 
   queriesDeProdutos: { [query: string]: String; } = {};
   idFornecedor: String;
@@ -54,10 +54,12 @@ export class FornecedoresComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.router.events.subscribe((path) => {
-      if (path.url != this.url) {
-        window.scrollTo(0, 0);
-      }
+    this.router.events.subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          if (event.url != this.url) {
+            window.scrollTo(0, 0);
+          }
+        }
     });
   }
 

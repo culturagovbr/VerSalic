@@ -37,8 +37,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
   totalIncentivadores = 0;
   totalFornecedores = 0;
 
+  // Counters
+  counto1: any;
+  counto2: any;
+  counto3: any;
+  counto4: any;
+  counto5: any;
+
   // Configurações de Calendário
-  private opcoesCalendario: IMyOptions = {
+  public opcoesCalendario: IMyOptions = {
       dateFormat: 'dd/mm/yyyy',
       todayBtnTxt: 'Hoje',
       firstDayOfWeek: 'su',
@@ -50,7 +57,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       dayLabels: {su: 'Dom', mo: 'Seg', tu: 'Ter', we: 'Qua', th: 'Qui', fr: 'Sex', sa: 'Sáb'},
       monthLabels: { 1: 'Jan', 2: 'Fev', 3: 'Mar', 4: 'Abr', 5: 'Mai', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Set', 10: 'Out', 11: 'Nov', 12: 'Dez' }
   };
-  private opcoesCalendario2: IMyOptions = {
+  public opcoesCalendario2: IMyOptions = {
       dateFormat: 'dd/mm/yyyy',
       todayBtnTxt: 'Hoje',
       firstDayOfWeek: 'su',
@@ -75,7 +82,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   // Opções de Ordenação
   ordenarPor = 'PRONAC';
-  ordenarDesc = false;
+  ordenarDesc = true;
   ordenarPorQueries:  { [query: string]: String; } = {}
   queriesDeOrdemDeProjetos: { [query: string]: String }
                           = { 'PRONAC':           'PRONAC',
@@ -193,7 +200,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         if (query === 'sort') {
           this.ordenarPor = this.queries['sort'].split(':')[0];
-          this.ordenarDesc = this.queries['sort'].split(':')[1] === 'desc' ? false : true;
+          this.ordenarDesc = true;
         }
       }
     }
