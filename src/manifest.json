@@ -1,20 +1,20 @@
 {
-  "name": "Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura",
-  "short_name": "VERSALIC",
-  "icons": [
-    {
-      "src": "assets/VERSALIC_logo.png",
-      "sizes": "192x192",
-      "type": "image\/png"
-    },
-    {
-      "src": "assets/VERSALIC_splash.png",
-      "sizes": "256x256",
-      "type": "image\/png"
-    }
-  ],
-  "theme_color": "#b92b27",
-  "background_color": "#226000",
-  "display": "standalone",
-  "start_url": "./?utm_source=web_app_manifest"
-}
+    "name": "Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura",
+    "short_name": "VERSALIC",
+    "icons": [
+      {
+        "src": "assets/VERSALIC_logo.png",
+        "sizes": "192x192",
+        "type": "image\/png"
+      },
+      {
+        "src": "assets/VERSALIC_splash.png",
+        "sizes": "256x256",
+        "type": "image\/png"
+      }
+    ],
+    "theme_color": "#b92b27",
+    "background_color": "#226000",
+    "display": "standalone",
+    "start_url": "./?utm_source=web_app_manifest"
+  }

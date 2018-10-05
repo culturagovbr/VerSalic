@@ -4,22 +4,15 @@
       <span *ngIf="!carregandoDados" class="baixar"><p>
                 <img class="botao-icone" alt="Ícone de propostas" src="../../../assets/ic_propostas.svg"/>
                 &nbsp;Pagina de Proposta - baixar:&nbsp;&nbsp;&nbsp;
-                <span class="links"><a filename="proposta.json" target="proposta.json" href="{{ configurationService.ApiUrl + 'propostas/' + idProposta }}">json</a> | 
-                <a filename="proposta.csv" target="proposta.csv" href="{{ configurationService.ApiUrl + 'propostas/' + idProposta + '?format=csv' }}">csv</a> | 
-                <a filename="proposta.xml" target="proposta.xml" href="{{ configurationService.ApiUrl + 'propostas/' + idProposta + '?format=xml' }}">xml</a></span></p>
+                <span class="links"><a filename="proposta.json" target="proposta.json" href="{{ configurationService.ApiUrl + 'propostas/' + idProposta }}" title="Baixar dados em formato JSON.">json</a> | 
+                <a filename="proposta.csv" target="proposta.csv" href="{{ configurationService.ApiUrl + 'propostas/' + idProposta + '?format=csv' }}" title="Baixar dados em formato CSV.">csv</a> | 
+                <a filename="proposta.xml" target="proposta.xml" href="{{ configurationService.ApiUrl + 'propostas/' + idProposta + '?format=xml' }}" title="Baixar dados em formato XML.">xml</a></span></p>
       </span>
-      <div *ngIf="!carregandoDados" class="compartilhar"> 
+      <div *ngIf="!carregandoDados" class="compartilhar" title="Compartilhar nas Redes Sociais"> 
       <p>Compartilhe:&nbsp;&nbsp;</p>
-      <share-buttons class="withCount" 
-                  [defaultStyle]="false"
+      <share-buttons class="withCount"
                   [url]="url" 
-                  [title]="'Proposta: ' + proposta.nome" 
-                  [description]="'VERSALIC - Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura.'"
-                  [stumbleUpOn]="false" [pinterest]="false" [tumblr]="false" [linkedIn]="false"
-                  [showCount]="true" ></share-buttons>
-      <span class="sb-buttons"><span class="sb-button">
-        <button (click)="compartilharTelegram()"><span class="sb-template"><i class="fa fa-paper-plane"></i></span></button>
-      </span></span>
+                  [title]="'Proposta: ' + proposta.nome"></share-buttons>
     </div>
     </div>
   </div>

@@ -111,42 +111,47 @@ footer {
   }
 }
 
-.sb-buttons {
+.sb-versalic {
+  &.sb-group {
 
-  display: inline-block;
+    display: inline-block;
 
-  .sb-button {  
+    .sb-button {  
 
-    button{
+      button{
 
-      border-radius: 15px;
-      background-color: $verde-salic; 
-      min-width: 30px;
-      height: 30px;
-      padding: 8px;
-      vertical-align: middle;
+        border-radius: 15px;
+        border: none;
+        background-color: $verde-salic; 
+        min-width: 30px;
+        height: 30px;
+        padding: 8px;
+        vertical-align: middle;
 
-      .sb-template{
-        i {color: white; font-size: 1.0em; display: block; }
+        .sb-inner{
+          i {color: white; font-size: 1.0em; display: block; }
 
-        .fa-google-plus {
-          font-size: 0.75em;
+          .fa-google-plus {
+            font-size: 0.75em;
+          }
+          .fa-whatsapp { 
+            margin-top: -1px; 
+          }
+          .fa-linkedin { 
+            margin-top: -2px; 
+          }
+          .fa-envelope { 
+            margin-top: -2px; 
+          }
+          .fa-send { // Telegram
+            margin-top: -1px; 
+            margin-left: -2px; 
+          }
+          .fa-reddit-alien {
+            margin-top: -1px;
+            margin-left: -2px;
+          }
         }
-
-        .fa-paper-plane {
-          font-size: 0.75em;
-          padding: 0px 2px 0px 0px
-        }
-      }
-      .sb-count{
-      }
-
-      .fa-whatsapp { 
-        margin-top: -1px; 
-        }
-      .fa-reddit-alien {
-        margin-top: -1px;
-        margin-left: -2px;
       }
     }
   }

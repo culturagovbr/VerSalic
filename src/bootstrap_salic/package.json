@@ -1,0 +1,11 @@
+{
+  "name": "bootstrap_salic",
+  "version": "1.0.0",
+  "description": "Bootstrap modified for Salic Colors",
+  "main": "js/bootstrap.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mateus Machado Luna",
+  "license": "GPL-3.0"
+}

@@ -1,20 +1,17 @@
-import { PaginationService } from './services/pagination.service';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { AppRoutingModule } from './modules/app.rounting.module';
 import { RouteReuseStrategy } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 // Modules de terceiros
-import { ShareButtonsModule } from 'ng2-sharebuttons';
-import { MetaModule,  MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@nglibs/meta';
+import { ShareButtonsModule, ShareButtonsOptions } from 'ngx-sharebuttons';
+import { MetaModule,  MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@ngx-meta/core';
 import { AlertModule, BsDropdownModule, ButtonsModule, CollapseModule, PaginationModule, PopoverModule, ModalModule } from 'ngx-bootstrap/';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { CountoModule } from 'angular2-counto';
-
-// Components de Terceiros
 import { NgSpinKitModule } from 'ng-spin-kit';
 
 // Components do App
@@ -33,8 +30,12 @@ import { SobreComponent } from './components/sobre/sobre.component';
 import { ApiService } from './services/api.service';
 import { ConfigurationService } from './services/configuration.service';
 import { DataFormatterService } from './services/data-formatter.service';
+import { PaginationService } from './services/pagination.service';
 
+// Outros
+import { AppRoutingModule } from './modules/app.rounting.module';
 import { CustomReuseStrategy } from './services/route-reuse.strategy';
+import { NgxMyDatePickerConfig } from 'ngx-mydatepicker/dist/services/ngx-my-date-picker.config';
 
 @Pipe({name: 'numero'})
 export class NumeroPipe implements PipeTransform {
@@ -60,6 +61,13 @@ export function metaFactory(): MetaLoader {
   });
 }
 
+const shareOptions: ShareButtonsOptions = {
+  include: ['facebook', 'twitter', 'linkedin', 'google', 'reddit', 'whatsapp', 'telegram', 'email', 'copy'],
+  exclude: ['tumblr', 'stumble', 'vk', 'tumblr', 'pinterest'],
+  description: 'VERSALIC - Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura.',
+  theme: 'versalic'
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +88,8 @@ export function metaFactory(): MetaLoader {
     HttpModule,
     AppRoutingModule,
     NgSpinKitModule,
-    ShareButtonsModule.forRoot(),
+    BrowserAnimationsModule,
+    ShareButtonsModule.forRoot(shareOptions),
     MetaModule.forRoot({
       provide: MetaLoader,
       useFactory: (metaFactory)
@@ -95,14 +104,14 @@ export function metaFactory(): MetaLoader {
     NgxMyDatePickerModule,
     CountoModule
   ],
-  providers: [
+  providers: [ 
     ApiService,
     ConfigurationService,
     DataFormatterService,
     PaginationService,
     DatePipe,
-    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy}
-  ],
+    NgxMyDatePickerConfig,
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,22 +3,15 @@
     <div class="container">
       <span *ngIf="!carregandoDados" class="baixar">
                 <p><img class="botao-icone" alt="Ícone de incentivadores" src="../../../assets/ic_incentivadores.svg"/>
-                &nbsp;Pagina de Incentivador - baixar:&nbsp;&nbsp;&nbsp;<span class="links"><a filename="incentivador.json" target="incentivador.json" href="{{ configurationService.ApiUrl + 'incentivadores/' + idIncentivador }}">json</a> | 
-                <a filename="incentivador.csv" target="incentivador.csv" href="{{ configurationService.ApiUrl + 'incentivadores/' + idIncentivador + '?format=csv' }}">csv</a> | 
-                <a filename="incentivador.xml" target="incentivador.xml" href="{{ configurationService.ApiUrl + 'incentivadores/' + idIncentivador + '?format=xml' }}">xml</a></span></p>
+                &nbsp;Pagina de Incentivador - baixar:&nbsp;&nbsp;&nbsp;<span class="links"><a filename="incentivador.json" target="incentivador.json" href="{{ configurationService.ApiUrl + 'incentivadores/' + idIncentivador }}" title="Baixar dados em formato JSON.">json</a> | 
+                <a filename="incentivador.csv" target="incentivador.csv" href="{{ configurationService.ApiUrl + 'incentivadores/' + idIncentivador + '?format=csv' }}" title="Baixar dados em formato CSV.">csv</a> | 
+                <a filename="incentivador.xml" target="incentivador.xml" href="{{ configurationService.ApiUrl + 'incentivadores/' + idIncentivador + '?format=xml' }}" title="Baixar dados em formato XML.">xml</a></span></p>
       </span>
-      <div *ngIf="!carregandoDados" class="compartilhar"> 
+      <div *ngIf="!carregandoDados" class="compartilhar" title="Compartilhar nas Redes Sociais"> 
         <p>Compartilhe:&nbsp;&nbsp;</p>
-        <share-buttons class="withCount" 
-                    [defaultStyle]="false"
-                    [url]="url" 
-                    [title]="'Incentivador: ' + incentivador.nome" 
-                    [description]="'VERSALIC - Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura.'"
-                    [stumbleUpOn]="false" [pinterest]="false" [tumblr]="false" [linkedIn]="false"
-                    [showCount]="true" ></share-buttons>
-      <span class="sb-buttons"><span class="sb-button">
-        <button (click)="compartilharTelegram()"><span class="sb-template"><i class="fa fa-paper-plane"></i></span></button>
-      </span></span>
+        <share-buttons class="withCount"
+                      [url]="url" 
+                      [title]="'Incentivador: ' + incentivador.nome"></share-buttons>
       </div>
     </div>
   </div>

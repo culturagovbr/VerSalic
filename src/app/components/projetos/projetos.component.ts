@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, CanDeactivate } from '@angular/router';
+import { Router, ActivatedRoute, CanDeactivate, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
-import { MetaService } from '@nglibs/meta';
+import { MetaService } from '@ngx-meta/core';
 import { ApiService } from './../../services/api.service';
 import { DataFormatterService } from './../../services/data-formatter.service';
 import { ConfigurationService } from './../../services/configuration.service';
@@ -45,6 +45,7 @@ export class ProjetosComponent implements OnInit, OnDestroy, AfterViewInit {
   // Dados utilizados na view
   textoSelecionado = 'resumo';
   isProvidenciasEscondido = true;
+  relacaoPagamentosCarregadas = 0;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -63,15 +64,22 @@ export class ProjetosComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
 
-    this.router.events.subscribe((path) => {
-      if (path.url != this.url) {
-        window.scrollTo(0, 0);
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.url != this.url) {
+          window.scrollTo(0, 0);
+        }
       }
     });
   }
 
   ngOnDestroy() {
     this.inscricao.unsubscribe();
+  }
+
+  consoleLog(str: string) {
+    console.log(str);
   }
 
   onLoadProjeto(PRONAC: Number) {
@@ -158,6 +166,7 @@ export class ProjetosComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modalDeRelacaoPagamentos.show();
   }
   public esconderModalDeRelacaoPagamentos(): void {
+    this.relacaoPagamentosCarregadas = 0;
     this.modalDeRelacaoPagamentos.hide();
   }
 
@@ -171,29 +180,34 @@ export class ProjetosComponent implements OnInit, OnDestroy, AfterViewInit {
   public mostrarModalDeRelacaoBensCapital() {
     this.modalDeRelacaoBensCapital.show();
   }
-  public esconderModalDeRelacaoBensCapitals(): void {
+  public esconderModalDeRelacaoBensCapital(): void {
     this.modalDeRelacaoBensCapital.hide();
   }
 
   // Utilizado pelo Guard de Rotas (can-deactivate-guard.service) quando é feita uma troca de página.
   public esconderTodosOsModais(): void {
-    this.modalDeDistribuicao.hide();
-    this.modalDeDivulgacao.hide();
-    this.modalDeDocumentosAnexos.hide();
-    this.modalDeMarcasAnexas.hide();
-    this.modalDeDeslocamentos.hide();
-    this.modalDeProrrogacao.hide();
-    this.modalDeRelatorioFisico.hide();
-    this.modalDeCertidoesNegativas.hide();
-    this.modalDeCaptacoes.hide();
-    this.modalDeRelacaoPagamentos.hide();
-    this.modalDeReadequacoes.hide();
-    this.modalDeRelacaoBensCapital.hide();
+    if (this.modalDeDistribuicao !== undefined) { this.modalDeDistribuicao.hide(); }
+    if (this.modalDeDivulgacao !== undefined) { this.modalDeDivulgacao.hide(); }
+    if (this.modalDeDocumentosAnexos !== undefined) { this.modalDeDocumentosAnexos.hide(); }
+    if (this.modalDeMarcasAnexas !== undefined) { this.modalDeMarcasAnexas.hide(); }
+    if (this.modalDeDeslocamentos !== undefined) { this.modalDeDeslocamentos.hide(); }
+    if (this.modalDeProrrogacao !== undefined) { this.modalDeProrrogacao.hide(); }
+    if (this.modalDeRelatorioFisico !== undefined) { this.modalDeRelatorioFisico.hide(); }
+    if (this.modalDeCertidoesNegativas !== undefined) { this.modalDeCertidoesNegativas.hide(); }
+    if (this.modalDeCaptacoes !== undefined) { this.modalDeCaptacoes.hide(); }
+    if (this.modalDeRelacaoPagamentos !== undefined) { this.modalDeRelacaoPagamentos.hide(); this.relacaoPagamentosCarregadas = 0; }
+    if (this.modalDeReadequacoes !== undefined) { this.modalDeReadequacoes.hide(); }
+    if (this.modalDeRelacaoBensCapital !== undefined) { this.modalDeRelacaoBensCapital.hide(); }
   }
 
   // Obtem o tamanho de vetores internos do Projeto.
   obterLength(nome: string) {
     return (<any>this.projeto._embedded[nome]).length;
+  }
+
+  public incrementarRelacaoPagamentos() {
+    this.relacaoPagamentosCarregadas = this.relacaoPagamentosCarregadas + 20;
+    window.scrollTo(0, 0);
   }
 
   ngAfterViewInit() {
@@ -289,10 +303,6 @@ export class ProjetosComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     });
 
-  }
-
-  compartilharTelegram() {
-    window.open('https://t.me/share/url?url=' + encodeURIComponent(window.location.href), '_blank');
   }
 
   atualizarMetaTags() {

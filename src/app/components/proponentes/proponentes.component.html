@@ -4,22 +4,15 @@
       <span *ngIf="!carregandoDados"  class="baixar"><p>
                 <img class="botao-icone" alt="Ícone de proponentes" src="../../../assets/ic_proponentes.svg"/>
                 &nbsp;Pagina de Proponente - baixar:&nbsp;&nbsp;&nbsp;
-                <span class="links"><a filename="proponente.json" target="proponente.json" href="{{ configurationService.ApiUrl + 'proponentes/' + idProponente }}">json</a> | 
-                <a filename="proponente.csv" target="proponente.csv" href="{{ configurationService.ApiUrl + 'proponentes/' + idProponente + '?format=csv' }}">csv</a> | 
-                <a filename="proponente.xml" target="proponente.xml" href="{{ configurationService.ApiUrl + 'proponentes/' + idProponente + '?format=xml' }}">xml</a></span></p>
+                <span class="links"><a filename="proponente.json" target="proponente.json" href="{{ configurationService.ApiUrl + 'proponentes/' + idProponente }}" title="Baixar dados em formato JSON.">json</a> | 
+                <a filename="proponente.csv" target="proponente.csv" href="{{ configurationService.ApiUrl + 'proponentes/' + idProponente + '?format=csv' }}" title="Baixar dados em formato CSV.">csv</a> | 
+                <a filename="proponente.xml" target="proponente.xml" href="{{ configurationService.ApiUrl + 'proponentes/' + idProponente + '?format=xml' }}" title="Baixar dados em formato XML.">xml</a></span></p>
       </span>
-      <div *ngIf="!carregandoDados" class="compartilhar"> 
+      <div *ngIf="!carregandoDados" class="compartilhar" title="Compartilhar nas Redes Sociais"> 
       <p>Compartilhe:&nbsp;&nbsp;</p>
-      <share-buttons class="withCount" 
-                  [defaultStyle]="false"
-                  [url]="url" 
-                  [title]="'Proponente: ' + proponente.nome" 
-                  [description]="'VERSALIC - Portal de Visualização do Sistema de Apoio às Leis de Incentivo à Cultura.'"
-                  [stumbleUpOn]="false" [pinterest]="false" [tumblr]="false" [linkedIn]="false"
-                  [showCount]="true" ></share-buttons>
-      <span class="sb-buttons"><span class="sb-button">
-        <button (click)="compartilharTelegram()"><span class="sb-template"><i class="fa fa-paper-plane"></i></span></button>
-      </span></span>
+      <share-buttons class="withCount"
+                    [url]="url" 
+                    [title]="'Proponente: ' + proponente.nome"></share-buttons>
     </div>
     </div>
   </div>
@@ -51,7 +44,8 @@
         <p *ngIf="totalDeItens == 1">Foi encontrado um projeto submetido por este proponente: </p>
       </div>
     </div>
-    <div class="row row-cards" *ngIf="!carregandoDadosProjetos">
+    <div class="row row-cards" *ngIf="listaProjetos !== null && listaProjetos !== undefined">
+
       <div *ngFor="let projeto of listaProjetos;" class="card col-sm-12 col-md-6" role="group">
         <div class="card-header texto-elipsado" title="{{ projeto.nome }}"><p>{{ projeto.nome }}</p></div>
         <div class="card-resposta texto-elipsado">
@@ -69,14 +63,14 @@
             <div class="col-sm-5"><p class="resposta-label">Município: </p><p class="resposta-valor">{{ projeto.municipio }}, {{ projeto.UF }}</p></div>
           </div>
           <div class="row">
-            <div class="col-xs-7"><p class="resposta-label">Valor Projeto: </p><p class="resposta-valor-destaque" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_projeto) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_projeto) }}</p></div>
+            <div class="col-xs-7"><p class="resposta-label">Valor Proposta: </p><p class="resposta-valor-destaque" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_proposta) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_proposta) }}</p></div>
             <div class="col-xs-5"><p class="resposta-label">Valor Captado: </p><p class="resposta-valor-destaque" title="{{ dataFormatterService.formataValorEmReais(projeto.valor_captado) }}">{{ dataFormatterService.formataValorEmReais(projeto.valor_captado) }}</p></div>
           </div>                
         </div>
         <div class="card-botoes-container">
           <div class="card-botoes" [ngStyle]="{'border-top-color': !projeto.isResumoEscondido ? '#b3b3b3' : '#293623', 'border-left-color': !projeto.isResumoEscondido ? '#b3b3b3' : '#293623'}">
             <span class="card-botao-resumo" (click)="projeto.isResumoEscondido = !projeto.isResumoEscondido"
-                [ngStyle]="{'background-color': !projeto.isResumoEscondido ? '#e0e0e0' : '#293623', 'border-color': !projeto.isResumoEscondido ? '#b3b3b3' : '#293623', 'border-bottom-right-radius': !projeto.isResumoEscondido ? '0px' : '5px'}">
+                 [ngClass]="{'card-botao-resumo-ativo': projeto.isResumoEscondido }" >
               <a [ngStyle]="{'color': projeto.isResumoEscondido ? 'white' : '#226000'}">{{ !projeto.isResumoEscondido ? '&#9656;' : '&#9652;' }}&nbsp; RESUMO</a>
             </span>
             
@@ -89,14 +83,14 @@
           <p role="contentinfo">{{projeto.resumo}}</p>
         </div>
       </div>
-
-      <p *ngIf="totalDeItens > totalDeItensCarregado">Exibidos {{ totalDeItensCarregado }} projetos. <button (click)="carregarMaisProjetos()">EXIBIR MAIS</button></p>
-
-      <div *ngIf="buscaPorProjetosSemResultados">
-        <p>Não encontramos Projetos submetidos por este Proponente.</p>
-      </div>
-
     </div>
+
+    <p class="paginador" *ngIf="totalDeItens > totalDeItensCarregado">Exibidos {{ totalDeItensCarregado }} projetos de {{ totalDeItens }}.&nbsp;&nbsp;<button class="btn btn-primary" (click)="carregarMaisProjetos()">Exibir mais</button></p>
+
+    <div *ngIf="buscaPorProjetosSemResultados">
+      <p>Não encontramos Projetos submetidos por este Proponente.</p>
+    </div>
+
   </div>
   <div *ngIf="carregandoDados" class="spinner">
     <sk-cube-grid [color]="'#226000'" [isRunning]="carregandoDados"></sk-cube-grid>

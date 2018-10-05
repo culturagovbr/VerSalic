@@ -431,7 +431,7 @@
     padding-top: 20px;
 
     .paginacao-superior {
-        margin-top: -18px;
+        margin-top: -20px;
         margin-bottom: -15px;
         text-align: end;
         padding-right: 30px;
@@ -446,7 +446,7 @@
     p { display: inline-block; }
 
     .quantidade-respostas { 
-        padding-top: 8px; 
+        padding-top: 2px; 
         padding-left: 30px;
 
         @media all and (max-width: 440px){
@@ -654,8 +654,25 @@
                 border-top: 1px solid $cinza-escuro;
                 border-left: 1px solid $cinza-escuro;   
                 margin: -1px;
+                cursor: pointer;
                 @media all and (max-width: 330px){ padding: 8px 15px 9px 10px; }
-                &:hover { border-right: 1px solid $cinza-escuro; }
+
+                &:hover { 
+                    border-right: 1px solid $cinza-escuro; 
+                    background-color: #d2d2d2;
+                    border-bottom-right-radius: 0px;
+                }
+            }
+
+            .card-botao-resumo-ativo {
+                background-color: #293623 !important;
+                border-color: #293623 !important;
+                border-bottom-right-radius: 5px;
+
+                &:hover { 
+                    border-right: 0px; 
+                    border-bottom-right-radius: 5px;
+                }
             }
 
             .card-botao-ver {
@@ -700,6 +717,10 @@
             @media all and (min-width: 768px){
                 height: 122px;
             } 
+        }
+
+        .card-botoes {
+            margin: -13px 10px 10px 10px;
         }
     }
 
