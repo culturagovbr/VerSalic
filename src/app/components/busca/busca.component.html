@@ -78,7 +78,7 @@
                 <div class="form-control-placeholder">Segmento</div>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="seletorSegmentoDoProjeto">
                   <li *ngFor="let segmento of segmentosDeProjetos.segmentosFiltrados(queries['area']); let i = index" role="menuitem">
-                    <a (click)="i > 0 ? queries['segmento'] = segmento['cod'] : queries['segmento'] = null; 
+                    <a (click)="i > 0 ? queries['segmento'] = segmento['cod'] : queries['segmento'] = null;
                                 i > 0 ? queries['area'] = segmento['areaCod'] : queries['segmento'] = null;" class="dropdown-item">{{ segmento['nome'] }}</a>
 
                   </li>
@@ -187,7 +187,73 @@
                       </button>
                   </span>
               </div>
+              <!-- Busca por Ano do projeto =============================================================================== -->
+            <div *ngSwitchCase="'propostas'" class="row">
+
+              <div class="input col-sm-2 col-xs-6 btn-group hidden-xs" dropdown>
+                <button class="btn btn-default form-control text-left dropdown-toggle" [ngClass]="{'cheio': queries['ano_projeto'] !== undefined && queries['ano_projeto'] !== null && queries['ano_projeto'] !== ''}" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" dropdownToggle>
+                  {{ queries['ano_projeto'] }}
+                  <span class="caret"></span>
+                </button>
+                <div class="form-control-placeholder">Ano Projeto</div>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="seletorAnoProjeto">
+                  <li>09</li>
+                  <li>10</li>
+                  <li>11</li>
+                  <li>12</li>
+                  <li>13</li>
+                  <li>14</li>
+                  <li>15</li>
+                  <li>16</li>
+                  <li>17</li>
+                  <li>18</li>
+                  <!-- <li *ngFor="let estado of estados.listaEstados; let i = index" role="menuitem"> -->
+                  <!--   <a (click)="i > 0 ? queries['UF'] = estado.UF : queries['UF'] = null">{{ estado.nome }}</a> -->
+                  <!-- </li> -->
+                </ul>
+              </div>
+              <div class="input col-sm-2 col-xs-6 btn-group visible-xs-inline-block">
+                <select id="seletorAnoProjeto" class="form-control" aria-labelledby="seletorAnoProjeto" [ngModel]="queries['ano_projeto']"
+                                                                 (change)="mudarAnoProjetoPorSelect($event)"
+                                                                 [ngClass]="{'cheio': queries['ano_projeto'] !== undefined && queries['ano_projeto'] !== ''}">
+                  <!-- <option [value]="i > 0 ? estado.UF : ''" *ngFor="let estado of estados.listaEstados; let i = index">{{ estado.nome }}</option> -->
+                </select>
+                <div class="form-control-placeholder">Ano Projeto</div>
+              </div>
+
             </div>
+            </div>
+            <div *ngSwitchCase="'projetos'"  class="row">
+            <div class="input col-sm-2 col-xs-6 btn-group hidden-xs" dropdown>
+                <button class="btn btn-default form-control text-left dropdown-toggle" [ngClass]="{'cheio': queries['ano_projeto'] !== undefined && queries['ano_projeto'] !== null && queries['ano_projeto'] !== ''}" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" dropdownToggle>
+                  {{ queries['ano_projeto'] }}
+                  <span class="caret"></span>
+                </button>
+                <div class="form-control-placeholder">Ano Projeto</div>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="seletorAnoProjeto">
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '09'">2009</a></li>
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '10'">2010</a></li>
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '11'">2011</a></li>
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '12'">2012</a></li>
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '13'">2013</a></li>
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '14'">2014</a></li>
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '15'">2015</a></li>
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '16'">2016</a></li>
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '17'">2017</a></li>
+                  <li role="menuitem"><a (click)="queries['ano_projeto'] = '18'">2018</a></li>
+                </ul>
+            </div>
+              <div class="input col-sm-2 col-xs-6 btn-group visible-xs-inline-block">
+                <select id="seletorAnoProjeto" class="form-control" aria-labelledby="seletorAnoProjeto" [ngModel]="queries['ano_projeto']"
+                                                                 (change)="mudarAnoProjetoPorSelect($event)"
+                                                                 [ngClass]="{'cheio': queries['ano_projeto'] !== undefined && queries['ano_projeto'] !== ''}">
+                  <!-- <option [value]="i > 0 ? ano_projeto : ''" *ngFor="let ano of listaAnosProjeto; let i = index">{{ ano }}</option> -->
+                  <!-- <option [value]="i > 0 ? estado.UF : ''" *ngFor="let estado of estados.listaEstados; let i = index">{{ estado.nome }}</option> -->
+                </select>
+                <div class="form-control-placeholder">Ano Projeto</div>
+              </div>
+
+          </div>
            <!-- PROPOSTAS BUSCA AVANÇADA ====================================================================================== -->
             <div *ngSwitchCase="'propostas'" class="row">
               <div class="input col-sm-6">
@@ -398,7 +464,7 @@
           </div>
         </div>
 
-        <!-- Footer da Busca ============================================================== -->   
+        <!-- Footer da Busca ============================================================== -->
         <div class="row footer-busca">
           <div class="col-lg-12">
             <a (click)="buscaAvancada = !buscaAvancada">{{ buscaAvancada ? '&#x25B4; Busca Simples' : '&#x25B8; Busca Avançada' }}</a>
@@ -442,7 +508,7 @@
 
           <!-- ORDENAÇÃO ==============================================-->
 
-          <div class="container-ordenacao col-lg-5 col-md-6 col-sm-12 col-xs-9">  
+          <div class="container-ordenacao col-lg-5 col-md-6 col-sm-12 col-xs-9">
             <p *ngIf="keys(ordenarPorQueries).length > 0" class="header-respostas-titulo hidden-xs">Ordenar por: </p>
             <div *ngIf="keys(ordenarPorQueries).length > 0" aria-label="Ordenação" dropdown>
               <button class="btn btn-default dropdown-toggle" type="button" id="seletorOrdenarPor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"  dropdownToggle>
@@ -462,7 +528,7 @@
                 <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
               </button>
             </div>
-            
+
             <!-- BAIXAR CONSULTA ==============================================-->
            <span class="container-baixar">
               <button (click)="baixarCSVDaConsulta()" class="btn btn-default" [ngClass]="{'enabled': !carregandoDados, 'disabled': carregandoDados }"><span class="visible-xs-inline visible-lg-inline visible-md-inline hidden-sm">Baixar </span><span class="hidden-xs visible-sm-inline hidden-md">Baixar consulta </span><span class="glyphicon glyphicon-download" ></span></button>
@@ -503,7 +569,7 @@
 
         <!-- ORDENAÇÃO ==============================================-->
 
-        <div class="container-ordenacao col-lg-5 col-md-6 col-sm-12 col-xs-9">  
+        <div class="container-ordenacao col-lg-5 col-md-6 col-sm-12 col-xs-9">
           <p *ngIf="keys(ordenarPorQueries).length > 0" class="header-respostas-titulo hidden-xs">Ordenar por: </p>
           <div *ngIf="keys(ordenarPorQueries).length > 0" dropdown aria-label="Ordenação">
             <button class="btn btn-default dropdown-toggle" type="button" id="seletorOrdenarPor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"  dropdownToggle>
@@ -558,11 +624,11 @@
 
       <div class="col-sm-4 col-xs-12 paginacao-superior" *ngIf="numeroDeItems > 0">
 
-        <pagination [totalItems]="totalDeItems" 
-                    (pageChanged)="paginaAtual = $event.page; onTrocaPagina(paginaAtual);" 
-                    [maxSize]=" maximoBotoes - 2" 
+        <pagination [totalItems]="totalDeItems"
+                    (pageChanged)="paginaAtual = $event.page; onTrocaPagina(paginaAtual);"
+                    [maxSize]=" maximoBotoes - 2"
                     class="pagination-sm"
-                    [boundaryLinks]="false" 
+                    [boundaryLinks]="false"
                     [rotate]="false"
                     [(ngModel)]="paginaAtual"
                     nextText="&#x25B8;"
@@ -733,14 +799,14 @@
     <p>Experimente mudar os termos de busca ou filtros aplicados.</p>
   </alert>
   <div>
-   
+
   <div class="text-center" [ngStyle]="{ display: (numeroDeItems > 0) && !carregandoDados ? 'block' : 'none' }">
     <pagination [totalItems]="totalDeItems"
                 (pageChanged)="paginaAtual = $event.page; onTrocaPagina(paginaAtual);"
                 [maxSize]=" maximoBotoes + 2"
                 class="pagination-sm"
-                [boundaryLinks]="false" 
-                [rotate]="false"  
+                [boundaryLinks]="false"
+                [rotate]="false"
                 [(ngModel)]="paginaAtual"
                 nextText="&#x25B8;"
                 lastText="&#x25B8;&#x25B8;"

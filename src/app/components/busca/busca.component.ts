@@ -161,6 +161,19 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
                      'Humanidades', 'Artes Integradas'];
   segmentosDeProjetos = new Segmentos();
   estados = new Estados();
+  public listaAnosProjeto = ['2009', '2010'];
+      // [
+      //   {ano: '09', ano_extenso: '2009'},
+      //   {ano: '10', ano_extenso: '2010'},
+      //   {ano: '11', ano_extenso: '2011'},
+      //   {ano: '12', ano_extenso: '2012'},
+      //   {ano: '13', ano_extenso: '2013'},
+      //   {ano: '14', ano_extenso: '2014'},
+      //   {ano: '15', ano_extenso: '2015'},
+      //   {ano: '16', ano_extenso: '2016'},
+      //   {ano: '17', ano_extenso: '2017'},
+      //   {ano: '18', ano_extenso: '2018'}
+      // ];
   tiposPessoa = ['Qualquer tipo', 'Física', 'Jurídica'];
 
   taxaDuracaoCarregamento = 0;
@@ -429,7 +442,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
 
       switch (this.pesquisaPor) {
         case 'projetos':
-    
+
           this.apiService.getListaProjetos(this.queries).subscribe(
             resposta => {
               this.totalDeItems = resposta.total;
@@ -448,7 +461,7 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             },
             () => { this.carregandoDados = false; this.taxaDuracaoCarregamento = 0; window.scrollTo(0, 0);});
-          
+
         break;
 
         case 'propostas':
@@ -883,6 +896,15 @@ export class BuscaComponent implements OnInit, OnDestroy, AfterViewInit {
       $event.target.value === 'fisica' ? this.queries['tipo_pessoa'] = 'fisica' : this.queries['tipo_pessoa'] = 'juridica';
     } else {
       this.queries['tipo_pessoa'] = null;
+    }
+  }
+
+  mudarAnoProjetoPorSelect($event) {
+    console.log($event.target.value);
+    if ($event.target.value !== null && $event.target.value !== '' && $event.target.value !== 'Todos os anos') {
+      this.queries['ano_projeto'] = $event.target.value;
+    } else {
+      this.queries['ano_projeto'] = null;
     }
   }
 
